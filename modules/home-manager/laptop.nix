@@ -10,27 +10,10 @@
     	};
   	};
 
-  	# programs.git = {
-  	#   	enable = true;
-	  # 	settings = {
-	  #   	user.name = "matty";
-	  #   	user.email = "realkripper@email.com";
-	  #   	init.defaultBranch = "main";
-	  # 	};
-  	# };
-
-#   	programs.fish = {
-#   	  	enable = true;
-# 
-# 		interactiveShellInit = ''
-#  	    	fastfetch
-#  	    	set fish_greeting ""
-# 		'';
-#   	};
-
 	programs.fish.functions.rebuild = ''
 	  	cd /etc/nixos
 	  	sudo git fetch
+	  	sudo git pull
 	  	sudo git add .
 	  	read -P "Commit message (leave empty for default): " msg
 	  	if test -z "$msg"

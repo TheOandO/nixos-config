@@ -18,9 +18,11 @@
 			url = "github:nix-community/home-manager";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+
+		dolphin-overlay.url = "github:rumboon/dolphin-overlay";
 	};
 
-	outputs = { self, nixpkgs, noctalia, home-manager, ... } @ inputs:
+	outputs = { self, nixpkgs, noctalia, home-manager, dolphin-overlay, ... } @ inputs:
 	{
 		nixosConfigurations = {
 	    	laptop = nixpkgs.lib.nixosSystem {
@@ -63,18 +65,18 @@
 			        ./modules/hosts/desktop/security.nix
 			        ./modules/hosts/desktop/system.nix
 				    home-manager.nixosModules.home-manager
-				        {
-					          home-manager.useGlobalPkgs = true;
-					          home-manager.useUserPackages = true;
-					          home-manager.backupFileExtension = "backup";
-					          home-manager.users.matty = {
-						            imports = [
-							              ./modules/home-manager/common.nix
-							              ./modules/home-manager/desktop.nix
-						            ];
-					          };
-				        }
-			      ];
+				    {
+						home-manager.useGlobalPkgs = true;
+						home-manager.useUserPackages = true;
+						home-manager.backupFileExtension = "backup";
+						home-manager.users.matty = {
+							imports = [
+							          	./modules/home-manager/common.nix
+							            ./modules/home-manager/desktop.nix
+						    ];
+					    };
+				    }
+			   ];
 		    };
 	  	};
 	};
