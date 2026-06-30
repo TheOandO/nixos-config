@@ -13,6 +13,7 @@
 		kdePackages.qtsvg 
 		libsForQt5.qt5ct
 		kdePackages.qt6ct
+		heroic
 	];
 
 	programs.hyprland.enable = true;
