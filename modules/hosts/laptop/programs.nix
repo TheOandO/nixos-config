@@ -8,10 +8,6 @@
     	nautilus
 		vscodium
 		gparted
-
-    	#Flakes packages
-		inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
-
 		#Icon theme
 		papirus-icon-theme
 	];

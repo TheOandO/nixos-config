@@ -27,8 +27,4 @@
     		shell = pkgs.fish;
     		packages = with pkgs; [];
   	};
-
-  #	environment.shellAliases = {
-  #		rebuild = "cd /etc/nixos && git add . && (git commit -m \"update: $(date +%Y-%m-%d)\" || true) && git push && nix flake update --flake /etc/nixos && nixos-rebuild switch --flake .#matty";
-#	};
 }

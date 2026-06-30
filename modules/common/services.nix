@@ -27,10 +27,16 @@
     services.upower.enable = true;
 
 	services.tailscale = {
-	  enable = true;
-	  # Enable tailscale at startup
-	  #authKeyFile = "/run/secrets/tailscale_key";
+		enable = true;
+		# Enable tailscale at startup
+		#authKeyFile = "/run/secrets/tailscale_key";
 
+	};
+
+	services.avahi = {
+		enable = true;
+		nssmdns4 = true;
+		openFirewall = true;
 	};
 
 	services.syncthing = {

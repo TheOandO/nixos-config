@@ -10,7 +10,24 @@
 	];
 	environment.sessionVariables = {
 		XDG_MENU_PREFIX = "plasma-";
-		QT_QPA_PLATFORMTHEME = "kde";
 	};
-	
+
+	services.pipewire = {
+	  enable = true;
+	  wireplumber.enable = true;
+	  wireplumber.extraConfig = {
+	    "10-disable-suspend" = {
+	      "monitor.alsa.rules" = [
+	        {
+	          matches = [ { "node.name" = "~alsa_output.*"; } ];
+	          actions = {
+	            "update-props" = {
+	              "session.suspend-timeout-seconds" = -1;
+	            };
+	          };
+	        }
+	      ];
+	    };
+	  };
+	};
 }

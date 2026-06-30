@@ -14,25 +14,16 @@
 		libsForQt5.qt5ct
 		kdePackages.qt6ct
 		kdePackages.plasma-workspace
+		desktop-file-utils
+  		xdg-utils
+		kdePackages.kde-cli-tools
+		
 		heroic
 		protonplus
 	];
 
 	programs.hyprland.enable = true;
-	programs.dms-shell = {
-	  	enable = true;
 
-		quickshell.package = pkgs.quickshell;
-		
-		# Core features
-		enableSystemMonitoring = true;     # System monitoring widgets (dgop)
-		enableVPN = true;                  # VPN management widget
-		enableDynamicTheming = true;       # Wallpaper-based theming (matugen)
-		enableAudioWavelength = true;      # Audio visualizer (cava)
-		enableCalendarEvents = true;       # Calendar integration (khal)
-		enableClipboardPaste = true;       # Pasting from the clipboard history (wtype)
-	};
-	
 	programs.dconf.profiles.user.databases = [
 		{
 	    	settings."org/gnome/desktop/interface" = {
