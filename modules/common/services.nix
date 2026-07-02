@@ -66,7 +66,26 @@
 		  # - scx_bpfland: good for responsive desktop under heavy background load
 		  # - scx_lavd: built for the Steam Deck to eliminate gaming micro-stutter
 		  # - scx_cosmos: good desktop and server default, less battle-tested?
-		  scheduler = "scx_bpfland";
+		  scheduler = "scx_lavd";
 		  extraArgs = [ ];
+	};
+
+	systemd.services.git-pull-config = {
+		  description = "Pull latest NixOS config from GitHub on boot";
+		  after = [ "network-online.target" ];
+		  wants = [ "network-online.target" ];
+		  wantedBy = [ "multi-user.target" ];
+		  restartIfChanged = false;
+		  serviceConfig = {
+			    Type = "oneshot";
+			    RemainAfterExit = true;
+			    ExecStart = pkgs.writeShellScript "git-pull-config" ''
+				      cd /etc/nixos
+				      ${pkgs.git}/bin/git stash
+				      ${pkgs.git}/bin/git pull --rebase
+				      ${pkgs.git}/bin/git stash pop || true
+			    '';
+			    User = "root";
+		  };
 	};
 }
