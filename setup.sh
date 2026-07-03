@@ -75,7 +75,14 @@ log "Cloning repo into $NIXOS_DIR..."
 git clone "$REPO_URL" "$NIXOS_DIR" || error "Failed to clone repo. Check your internet connection and repo URL."
 success "Repo cloned successfully."
 
-# ─── Step 7: Copy hardware config ─────────────────────────────────────────────
+# ─── Step 7: Make scripts executable ─────────────────────────────────────────
+echo ""
+log "Making scripts executable..."
+chmod +x "$NIXOS_DIR/setup.sh" || warn "setup.sh not found, skipping."
+chmod +x "$NIXOS_DIR/sync-repos.sh" || warn "sync-repos.sh not found, skipping."
+success "Scripts are now executable."
+
+# ─── Step 8: Copy hardware config ─────────────────────────────────────────────
 echo ""
 log "Copying hardware config for host: $HOST..."
 TARGET_DIR="$NIXOS_DIR/modules/hosts/$HOST"
@@ -87,7 +94,7 @@ fi
 cp "$HARDWARE_CONFIG" "$TARGET_DIR/hardware.nix"
 success "Hardware config copied to $TARGET_DIR/hardware.nix"
 
-# ─── Step 8: Git add and commit hardware config ────────────────────────────────
+# ─── Step 9: Git add and commit hardware config ────────────────────────────────
 echo ""
 log "Committing hardware config..."
 cd "$NIXOS_DIR"
@@ -95,19 +102,19 @@ git add "modules/hosts/$HOST/hardware.nix" || error "Failed to git add hardware 
 git commit -m "add: $HOST hardware config" || error "Failed to commit hardware config."
 success "Hardware config committed."
 
-# ─── Step 9: Set remote to SSH ────────────────────────────────────────────────
+# ─── Step 10: Set remote to SSH ───────────────────────────────────────────────
 echo ""
 log "Setting remote origin to SSH..."
 git -C "$NIXOS_DIR" remote set-url origin git@github.com:TheOandO/nixos-config.git || error "Failed to set remote URL."
 success "Remote origin set to SSH."
 
-# ─── Step 10: Nix flake update ─────────────────────────────────────────────────
+# ─── Step 11: Nix flake update ────────────────────────────────────────────────
 echo ""
 log "Updating flake inputs..."
 nix flake update || error "Failed to update flake inputs. Check your internet connection."
 success "Flake inputs updated."
 
-# ─── Step 11: Rebuild ─────────────────────────────────────────────────────────
+# ─── Step 12: Rebuild ─────────────────────────────────────────────────────────
 echo ""
 log "Running nixos-rebuild for $HOST..."
 nixos-rebuild switch --flake "$NIXOS_DIR#$HOST" || error "nixos-rebuild failed. Check the error output above."
@@ -116,14 +123,38 @@ success "NixOS rebuilt successfully for $HOST."
 # ─── Done ─────────────────────────────────────────────────────────────────────
 echo ""
 echo -e "${GREEN}════════════════════════════════════════${NC}"
-echo -e "${GREEN}  Setup complete for: $HOST${NC}"
+echo -e "${GREEN}  Setup complete for: $HOST          ${NC}"
 echo -e "${GREEN}════════════════════════════════════════${NC}"
 echo ""
-echo -e "${YELLOW}Next step — set up SSH key for GitHub pushes:${NC}"
+echo -e "${YELLOW}Next step 1 — Set up SSH key for GitHub pushes:${NC}"
 echo ""
-ssh-keygen -t ed25519 -C \"nixos-$HOST\"
+ssh-keygen -t ed25519 -C "nixos-$HOST"
 cat /root/.ssh/id_ed25519.pub
 echo ""
 echo "  Then add the key to: https://github.com/settings/ssh/new"
 echo "  And test with: ssh -T git@github.com"
+echo ""
+
+echo -e "${YELLOW}Next step 2 — Add sync-repos.sh to your compositor startup:${NC}"
+echo ""
+
+if [ "$HOST" = "laptop" ]; then
+    echo "  You are on the laptop (Niri). Add this to your niri config:"
+    echo ""
+    echo '  spawn-at-startup "kitty" "--" "bash" "-c" "sudo /etc/nixos/sync-repos.sh; exec fish"'
+    echo ""
+    echo "  Or in home.nix:"
+    echo '  programs.niri.settings.spawn-at-startup = ['
+    echo '    { command = [ "kitty" "--" "bash" "-c" "sudo /etc/nixos/sync-repos.sh; exec fish" ]; }'
+    echo '  ];'
+else
+    echo "  You are on the desktop (Hyprland). Add this to your hyprland config:"
+    echo ""
+    echo "  exec-once = kitty -- bash -c 'sudo /etc/nixos/sync-repos.sh; exec fish'"
+    echo ""
+    echo "  Or in your Lua config:"
+    echo '  hl.on("hyprland.start", function()'
+    echo "      hl.exec_cmd(\"kitty -- bash -c 'sudo /etc/nixos/sync-repos.sh; exec fish'\")"
+    echo '  end)'
+fi
 echo ""
