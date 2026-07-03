@@ -26,6 +26,7 @@
 			  "fmask=133" 
 			  "nofail"
 			  "windows_names"
+			  "exec"
 		];
 	};
 
@@ -40,6 +41,7 @@
 			  "fmask=133" 
 			  "nofail"
 			  "windows_names"
+			  "exec"
 		];
 	};
 
