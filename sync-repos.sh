@@ -21,10 +21,7 @@ sync_repo() {
     fi
 
     cd "$dir"
-    git stash
-    git pull --rebase || error "$name: pull failed, restoring stash."
-    git stash pop || true
-
+    git pull --rebase || error "$name: pull failed"
     success "$name synced."
 }
 
