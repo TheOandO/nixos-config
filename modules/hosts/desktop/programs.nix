@@ -17,9 +17,13 @@
 		desktop-file-utils
   		xdg-utils
 		kdePackages.kde-cli-tools
-		
+
+		lsfg-vk
+		lsfg-vk-ui
 		heroic
 		protonplus
+		goverlay
+		mangohud
 	];
 
 	programs.hyprland.enable = true;
