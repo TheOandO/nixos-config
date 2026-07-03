@@ -17,7 +17,7 @@
 
 	fileSystems."/mnt/hihi" =
 	{ device = "/dev/disk/by-uuid/4A1C39811C396959";
-		fsType = "ntfs-3g";
+		fsType = "ntfs3";
 		options = [ 
 			  "rw" 
 			  "uid=1000" 
@@ -32,7 +32,7 @@
 
 	fileSystems."/mnt/adu" =
 	{ device = "/dev/disk/by-uuid/3AD8F535D8F4EFCD";
-		fsType = "ntfs-3g";
+		fsType = "ntfs3";
 		options = [ 
 			  "rw" 
 			  "uid=1000" 
