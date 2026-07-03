@@ -9,18 +9,19 @@ My personal NixOS configuration using flakes and home-manager, supporting multip
 ├── flake.nix              # Flake inputs and system definitions (all hosts)
 ├── flake.lock             # Pinned input versions
 ├── configuration.nix      # Shared base config, imports common modules
+├── setup.sh               # Automated setup script for new machines
 └── modules/
     ├── common/
     │   ├── programs.nix       # Shared system packages and programs
     │   ├── services.nix       # Shared system services
     │   ├── networking.nix     # Network configuration
     │   ├── security.nix       # Security settings
-    │   └── system.nix         # Miscellaneous system settings
+    │   ├── system.nix         # Miscellaneous system settings
     │   └── boot.nix           # Bootloader config
     ├── home-manager/
-    │   ├── common.nix       # Shared home manager config
-    │   ├── laptop.nix       # Laptop-specific home config
-    │   ├── desktop.nix      # Desktop-specific home config
+    │   ├── common.nix         # Shared home manager config
+    │   ├── laptop.nix         # Laptop-specific home config
+    │   └── desktop.nix        # Desktop-specific home config
     └── hosts/
         ├── laptop/
         │   ├── hardware.nix       # Laptop hardware config (auto-generated)
@@ -31,7 +32,7 @@ My personal NixOS configuration using flakes and home-manager, supporting multip
         │   ├── system.nix         # Laptop-specific system config
         │   └── boot.nix           # Laptop bootloader config
         └── desktop/
-            ├── hardware.nix       # Desktop hardware config (placeholder)
+            ├── hardware.nix       # Desktop hardware config (auto-generated)
             ├── programs.nix       # Desktop-specific packages
             ├── services.nix       # Desktop-specific services
             ├── networking.nix     # Desktop-specific networking config
@@ -45,61 +46,42 @@ My personal NixOS configuration using flakes and home-manager, supporting multip
 | Host | Desktop | File Manager | Notes |
 |------|---------|--------------|-------|
 | `laptop` | Niri (Wayland) + Noctalia | Nautilus | Primary mobile machine |
-| `desktop` | KDE Plasma 6 | Dolphin | Main workstation |
+| `desktop` | Hyprland + Noctalia | Dolphin | Main workstation |
 
 ## Installing on a New Machine
 
 ### 1. Boot NixOS installer and install base system
 
-Follow the [NixOS installation guide](https://nixos.org/manual/nixos/stable/#sec-installation). During install, let NixOS generate a default `configuration.nix` — you'll need the `hardware-configuration.nix` it produces.
+Follow the [NixOS installation guide](https://nixos.org/manual/nixos/stable/#sec-installation). During install, let NixOS generate a default `configuration.nix` — you will need the `hardware-configuration.nix` it produces.
 
-### 2. Clone this repo
+### 2. Run the setup script
+
+The setup script handles everything automatically — cloning the repo, copying hardware config, and rebuilding the system.
 
 ```bash
-sudo git clone https://github.com/TheOandO/nixos-config.git /etc/nixos
+curl -o /tmp/setup.sh https://raw.githubusercontent.com/TheOandO/nixos-config/main/setup.sh
+chmod +x /tmp/setup.sh
+sudo bash /tmp/setup.sh
 ```
 
-### 3. Add hardware config
+The script will:
+1. Ask which host to set up (`laptop` or `desktop`)
+2. Ask for your git username and email
+3. Clear `/etc/nixos` and clone this repo
+4. Copy `hardware-configuration.nix` to the correct host folder
+5. Commit the hardware config locally
+6. Set the remote to SSH
+7. Update flake inputs
+8. Run `nixos-rebuild switch`
 
-Copy the hardware config generated during install into the correct host folder:
+### 3. Set up SSH key for GitHub (for future pushes)
 
-```bash
-# For laptop:
-sudo cp /etc/nixos/hardware-configuration.nix /etc/nixos/modules/hosts/laptop/hardware.nix
-
-# For desktop:
-sudo cp /etc/nixos/hardware-configuration.nix /etc/nixos/modules/hosts/desktop/hardware.nix
-```
-
-### 4. Track the new file with git
-
-```bash
-cd /etc/nixos
-sudo git add .
-```
-
-### 5. Rebuild
+The setup script will print these instructions at the end, but for reference:
 
 ```bash
-# Laptop:
-sudo nixos-rebuild switch --flake /etc/nixos#laptop
-
-# Desktop:
-sudo nixos-rebuild switch --flake /etc/nixos#desktop
-```
-
-### 6. Set user password
-
-```bash
-sudo passwd matty
-```
-
-### 7. Set up SSH key for GitHub (optional, for pushing config changes)
-
-```bash
-sudo ssh-keygen -t ed25519 -C "nixos-root"
+sudo ssh-keygen -t ed25519 -C "nixos-<hostname>"
 sudo cat /root/.ssh/id_ed25519.pub
-# Add this key to GitHub → Settings → SSH keys
+# Add this key to: https://github.com/settings/ssh/new
 sudo ssh -T git@github.com  # verify it works
 ```
 
@@ -112,20 +94,3 @@ rebuild
 ```
 
 This prompts for a commit message (defaults to today's date if left empty), commits, pushes to GitHub, updates flake inputs, and rebuilds the system in one command.
-
-## Key Software
-
-### Shared
-- **Terminal**: Kitty
-- **Shell**: Fish with Tide prompt
-- **Browser**: Zen Browser
-- **Editor**: Micro
-
-### Laptop
-- **Window compositor**: Niri (Wayland)
-- **Desktop shell**: Noctalia
-- **File manager**: Nautilus
-
-### Desktop
-- **Desktop environment**: KDE Plasma 6
-- **File manager**: Dolphin
