@@ -53,7 +53,7 @@
 	#   enable = true;
 	#   openFirewall = true;
 	# };
-	services.gvfs.enable = true;
+	# services.gvfs.enable = true;
 	services.gnome.gnome-keyring.enable = true;
 	systemd.user.services.niri.enableDefaultPath = false;
 

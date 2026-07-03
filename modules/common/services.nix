@@ -21,6 +21,8 @@
 
 	# Enable the OpenSSH daemon.
     services.openssh.enable = true;
+
+	services.gvfs.enable = true;
 	
 	# Power profiles daemon
     services.power-profiles-daemon.enable = true;

@@ -19,14 +19,13 @@
 	{ device = "/dev/disk/by-uuid/4A1C39811C396959";
 		fsType = "ntfs3";
 		options = [ 
-			  "rw" 
-			  "uid=1000" 
-			  "gid=100" 
-			  "dmask=022" 
-			  "fmask=133" 
-			  "nofail"
-			  "windows_names"
-			  "exec"
+    "rw"
+    "user_id=1000"
+    "group_id=100"
+    "dmask=022"
+    "fmask=133"
+    "nofail"
+    "exec"
 		];
 	};
 
@@ -34,14 +33,13 @@
 	{ device = "/dev/disk/by-uuid/3AD8F535D8F4EFCD";
 		fsType = "ntfs3";
 		options = [ 
-			  "rw" 
-			  "uid=1000" 
-			  "gid=100" 
-			  "dmask=022" 
-			  "fmask=133" 
-			  "nofail"
-			  "windows_names"
-			  "exec"
+    "rw"
+    "user_id=1000"
+    "group_id=100"
+    "dmask=022"
+    "fmask=133"
+    "nofail"
+    "exec"
 		];
 	};
 
