@@ -15,25 +15,25 @@
 
 	fileSystems."/mnt/hihi" =
 	{ device = "/dev/disk/by-uuid/4A1C39811C396959";
-		fsType = "ntfs";
+		fsType = "ntfs3";
 		options = [ 
 			  "rw" 
 			  "dmask=022" 
 			  "fmask=133" 
 			  "nofail"
-			  "windows_names"
+			  "exec"
 		];
 	};
 
 	fileSystems."/mnt/adu" =
 	{ device = "/dev/disk/by-uuid/3AD8F535D8F4EFCD";
-		fsType = "ntfs";
+		fsType = "ntfs3";
 		options = [ 
 			  "rw" 
 			  "dmask=022" 
 			  "fmask=133" 
 			  "nofail"
-			  "windows_names"
+			  "exec"
 		];
 	};
 
