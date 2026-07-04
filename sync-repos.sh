@@ -21,7 +21,9 @@ sync_repo() {
     fi
 
     cd "$dir"
+    git stash
     git pull --rebase || error "$name: pull failed"
+    git push
     success "$name synced."
 }
 
