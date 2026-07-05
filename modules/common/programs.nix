@@ -20,7 +20,7 @@
 		wev
 		glib
 		gedit
-		os-prober
+		sbctl
 		
 		pear-desktop
 		inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
