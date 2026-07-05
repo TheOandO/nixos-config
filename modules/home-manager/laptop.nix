@@ -12,8 +12,6 @@
 
 	programs.fish.functions.rebuild = ''
 	  	cd /etc/nixos
-	  	sudo git fetch
-	  	sudo git pull
 	  	sudo git add .
 	  	read -P "Commit message (leave empty for default): " msg
 	  	if test -z "$msg"
