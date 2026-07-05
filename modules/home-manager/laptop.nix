@@ -18,8 +18,10 @@
 	    	set msg "update: "(date +%Y-%m-%d)
 	  	end
 	  	sudo git commit -m "$msg"; or true
-	  	sudo git push
-	  	sudo nix flake update
+		sudo git fetch origin
+		sudo git rebase -X ours origin/main; or true
+		sudo git push --force
+		sudo nix flake update
 	  	sudo nixos-rebuild switch --upgrade-all --flake .#laptop
 	'';
 }
