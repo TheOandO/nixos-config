@@ -26,15 +26,8 @@
 	};
 
 	fileSystems."/mnt/adu" =
-	{ device = "/dev/disk/by-uuid/3AD8F535D8F4EFCD";
-		fsType = "ntfs3";
-		options = [ 
-			  "rw" 
-			  "dmask=022" 
-			  "fmask=133" 
-			  "nofail"
-			  "exec"
-		];
+	{ device = "/dev/disk/by-uuid/40a40c3d-72e7-4ad2-a2fa-6e93ff0cf9fb";
+		fsType = "ext4";
 	};
 
 }

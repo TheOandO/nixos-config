@@ -6,9 +6,10 @@
 		kdePackages.kate
 		kdePackages.gwenview
 		kdePackages.qtsvg
-		kdePackages.kio # needed since 25.11
-		kdePackages.kio-fuse #to mount remote filesystems via FUSE
-		kdePackages.kio-extras #extra protocols support (sftp, fish and more)
+		kdePackages.kio
+		kdePackages.kio-fuse
+		kdePackages.kio-extras
+		kdePackages.kio-admin
 		kdePackages.kservice
 		kdePackages.qtsvg 
 		libsForQt5.qt5ct
