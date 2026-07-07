@@ -15,7 +15,7 @@
 	gtk = {
 		enable = true;
 		iconTheme = {
-			name = "Nordic-Green";
+			name = "Nordic-green";
 	  };
 	};
 	

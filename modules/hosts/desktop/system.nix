@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
 	fileSystems."/mnt/ext" =
@@ -16,4 +16,12 @@
 		fsType = "ext4";
 	};
 
+	fonts = {
+		packages = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
+		fontconfig.defaultFonts = {
+		    serif = [ "BigBlueTerm Nerd Font" ];
+		    sansSerif = [ "0xProto Nerd Font" ];
+		    monospace = [ "DejaVuSansM Nerd Font" ];
+		  };
+	};
 }

@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, lib,  ... }:
 {
 	environment.systemPackages = with pkgs; [
 		kdePackages.dolphin
@@ -32,6 +32,8 @@
 		nordic
 		kdePackages.qtstyleplugin-kvantum
 		libsForQt5.qtstyleplugin-kvantum
+
+		# inputs.stylix.packages.${pkgs.stdenv.hostPlatform.system}.default
 		
 		lsfg-vk
 		lsfg-vk-ui
@@ -40,6 +42,8 @@
 		goverlay
 		mangohud
 	];
+
+	#fonts.packages = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 
 	programs.hyprland.enable = true;
 
@@ -55,9 +59,6 @@
 	  enable = true; # Master switch, already covered in installation
 	  remotePlay.openFirewall = true;  # Open ports in the firewall for Steam Remote Play
 	  dedicatedServer.openFirewall = true; # Open ports for Source Dedicated Server hosting
-	  # Other general flags if available can be set here.
 	};
-
 	programs.gamemode.enable = true;
-	
 }
