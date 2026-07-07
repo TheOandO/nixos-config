@@ -17,7 +17,6 @@
 		kdePackages.kcoreaddons
 		kdePackages.kiconthemes
 		kdePackages.dolphin-plugins
-		kdePackages.spectacle
 		kdePackages.ffmpegthumbs
 		kdePackages.krdp
 		kdePackages.kimageformats # provides Qt plugins

@@ -8,6 +8,17 @@
 		size = 18;
 	};
 
+	qt = {
+		enable = true;
+	};
+
+	gtk = {
+		enable = true;
+		iconTheme = {
+			name = "Nordic-Green";
+	  };
+	};
+	
 	programs.fish.functions.rebuild = ''
 		cd /etc/nixos
 		sudo git add .
