@@ -7,13 +7,6 @@
 	xdg.userDirs.enable = true;
 	xdg.userDirs.setSessionVariables = false;
 	
-  	# gtk = {
-   #  	enable = true;
-   #  	iconTheme = {
-   #    		name = "Papirus-Dark";
-   #    		package = pkgs.papirus-icon-theme;
-   #  	};
-  	# };
 
   	programs.git = {
   	  	enable = true;

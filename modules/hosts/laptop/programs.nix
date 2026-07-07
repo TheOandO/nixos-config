@@ -18,4 +18,5 @@
   	programs.niri.enable = true;
 
 	programs.nautilus-open-any-terminal.enable = true;
+	programs.dconf.enable = true;
 }

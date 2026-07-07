@@ -49,5 +49,5 @@
   	programs.fish.enable = true;
  	programs.firefox.enable = true;
 
-	programs.dconf.enable = true;
+	#programs.dconf.enable = true;
 }
