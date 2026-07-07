@@ -29,6 +29,8 @@
   		xdg-utils
 		kdePackages.kde-cli-tools
 
+		inputs.freesmlauncher.packages.${pkgs.stdenv.hostPlatform.system}.default
+
 		nordic
 		kdePackages.qtstyleplugin-kvantum
 		libsForQt5.qtstyleplugin-kvantum

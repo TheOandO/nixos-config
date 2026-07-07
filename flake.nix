@@ -20,8 +20,8 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-		stylix = {
-			url = "github:nix-community/stylix";
+		freesmlauncher = {
+			url = "github:FreesmTeam/FreesmLauncher";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
@@ -34,6 +34,7 @@
 		noctalia,
 		home-manager,
 		dolphin-overlay,
+		freesmlauncher,
 		...
 	} @ inputs:
 		{
