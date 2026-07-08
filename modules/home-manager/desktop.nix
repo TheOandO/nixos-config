@@ -1,8 +1,9 @@
 { config, pkgs, ... }:
 {
 	home.pointerCursor = {
+		enable = true;
 		gtk.enable = true;
-		# x11.enable = true;
+		x11.enable = true;
 		package = pkgs.bibata-cursors;
 		name = "Bibata-Modern-Classic";
 		size = 18;
@@ -12,12 +13,12 @@
 		enable = true;
 	};
 
-	gtk = {
-		enable = true;
-		iconTheme = {
-			name = "Nordic-green";
-	  };
-	};
+	# gtk = {
+	# 	enable = true;
+	# 	iconTheme = {
+	# 		name = "Nordic-green";
+	#   };
+	# };
 	
 	programs.fish.functions.rebuild = ''
 		cd /etc/nixos
