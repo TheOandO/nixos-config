@@ -11,12 +11,8 @@
     	fastfetch
     	kitty
    		micro
-    	obsidian
 		gtk4
-		libreoffice-fresh
-		github-desktop
 		git
-		gparted
 		wev
 		glib
 		gedit
@@ -26,9 +22,12 @@
 		pear-desktop
 		inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
 		inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
-		
 		vesktop
-		
+		vscode-fhs
+		libreoffice-fresh
+		obsidian
+		gparted
+
 		# Fish shell plugins
     	fishPlugins.tide
     	fishPlugins.done
