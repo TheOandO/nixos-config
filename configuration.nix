@@ -16,12 +16,12 @@
 
   	# Allow unfree packages
   	nixpkgs.config.allowUnfree = true;
+# 
+# 	nixpkgs.config.permittedInsecurePackages = [
+# 		"pnpm-10.29.2"
+# 	];
 
-	nixpkgs.config.permittedInsecurePackages = [
-		"pnpm-10.29.2"
-	];
-
-	nix.settings.experimental-features = ["nix-command" "flakes"];
+	nix.settings.experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
 
   	# This value determines the NixOS release from which the default
   	# settings for stateful data, like file locations and database versions

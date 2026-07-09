@@ -1,5 +1,10 @@
 { config, lib, pkgs, modulesPath, ... }:
+
 {
+  imports = builtins.filter (f: lib.hasSuffix ".nix" f) (
+    lib.filesystem.listFilesRecursive ./containers
+  );
+
 	environment.systemPackages = [ pkgs.libheif pkgs.libheif.out ];
 	environment.pathsToLink = [ 
 		"/share/thumbnailers"
