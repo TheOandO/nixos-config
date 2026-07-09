@@ -35,4 +35,5 @@
 	nixpkgs.config.rocmSupport = true;
 	hardware.amdgpu.opencl.enable = true;
 	hardware.amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
+	hardware.amdgpu.overdrive.enable = true;
 }

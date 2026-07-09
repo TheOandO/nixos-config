@@ -37,7 +37,7 @@
 		kdePackages.qtstyleplugin-kvantum
 		libsForQt5.qtstyleplugin-kvantum
 
-		# inputs.stylix.packages.${pkgs.stdenv.hostPlatform.system}.default
+		inputs.compose2nix.packages.x86_64-linux.default
 		
 		lsfg-vk
 		lsfg-vk-ui
@@ -65,4 +65,13 @@
 	  dedicatedServer.openFirewall = true; # Open ports for Source Dedicated Server hosting
 	};
 	programs.gamemode.enable = true;
+
+	virtualisation.docker = {
+		enable = false;
+
+		rootless = {
+			enable = true;
+			setSocketVariable = true;
+		};
+	};
 }

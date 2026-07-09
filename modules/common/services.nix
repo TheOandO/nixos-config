@@ -1,4 +1,4 @@
-z{ config, lib, pkgs, modulesPath, ... }:
+{ config, lib, pkgs, modulesPath, ... }:
 {
 	# X11 keymap
 	services.xserver.xkb = {

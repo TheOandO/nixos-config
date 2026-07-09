@@ -25,6 +25,11 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+		compose2nix = {
+			url = "github:aksiksi/compose2nix";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
 		dolphin-overlay.url = "github:rumboon/dolphin-overlay";
 	};
 
@@ -35,6 +40,7 @@
 		home-manager,
 		dolphin-overlay,
 		freesmlauncher,
+		compose2nix,
 		...
 	} @ inputs:
 		{
