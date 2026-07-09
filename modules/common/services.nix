@@ -1,4 +1,4 @@
-{ config, lib, pkgs, modulesPath, ... }:
+z{ config, lib, pkgs, modulesPath, ... }:
 {
 	# X11 keymap
 	services.xserver.xkb = {
@@ -68,7 +68,7 @@
 		  # - scx_bpfland: good for responsive desktop under heavy background load
 		  # - scx_lavd: built for the Steam Deck to eliminate gaming micro-stutter
 		  # - scx_cosmos: good desktop and server default, less battle-tested?
-		  scheduler = "scx_lavd";
+		  scheduler = "scx_cake";
 		  extraArgs = [ ];
 	};
 }

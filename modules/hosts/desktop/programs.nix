@@ -12,6 +12,7 @@
 		kdePackages.kio-extras
 		kdePackages.kio-admin
 		kdePackages.kservice
+		kdePackages.kcalc
 		kdePackages.qtsvg 
 		kdePackages.qtwayland
 		kdePackages.kcoreaddons
@@ -31,6 +32,7 @@
 
 		inputs.freesmlauncher.packages.${pkgs.stdenv.hostPlatform.system}.default
 
+		clinfo
 		nordic
 		kdePackages.qtstyleplugin-kvantum
 		libsForQt5.qtstyleplugin-kvantum

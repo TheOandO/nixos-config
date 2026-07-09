@@ -30,4 +30,6 @@
 	    };
 	  };
 	};
+
+	services.lact.enable = true;
 }

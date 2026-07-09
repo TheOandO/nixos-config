@@ -24,11 +24,15 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
-  swapDevices = [ ];
+	swapDevices = [ ];
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  hardware.graphics.enable = true;
-  hardware.graphics.enable32Bit = true;
-  hardware.bluetooth.enable = true;
+	nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+	hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+	hardware.graphics.enable = true;
+	hardware.graphics.enable32Bit = true;
+	hardware.bluetooth.enable = true;
+
+	nixpkgs.config.rocmSupport = true;
+	hardware.amdgpu.opencl.enable = true;
+	hardware.amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
 }

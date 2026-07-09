@@ -23,5 +23,5 @@
 		    sansSerif = [ "0xProto Nerd Font" ];
 		    monospace = [ "DejaVuSansM Nerd Font" ];
 		  };
-	};
+	};	
 }
