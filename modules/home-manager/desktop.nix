@@ -19,6 +19,21 @@
 	# 		name = "Nordic-green";
 	#   };
 	# };
+
+	xdg.mimeApps = {
+	  enable = true;
+	  defaultApplications = {
+	    "inode/directory" = "org.kde.dolphin.desktop";
+	    "text/html" = "zen.desktop";
+	    "x-scheme-handler/http" = "zen.desktop";
+	    "x-scheme-handler/https" = "zen.desktop";
+	    "x-scheme-handler/ftp" = "zen.desktop";
+	    "application/xhtml+xml" = "zen.desktop";
+	    "application/x-extension-htm" = "zen.desktop";
+	    "application/x-extension-html" = "zen.desktop";
+	    "application/x-extension-xhtml" = "zen.desktop";
+	  };
+	};
 	
 	programs.fish.functions.rebuild = ''
 		cd /etc/nixos
