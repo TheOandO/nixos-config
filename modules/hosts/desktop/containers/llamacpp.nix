@@ -15,11 +15,11 @@
     image = "ghcr.io/ggml-org/llama.cpp:server-vulkan";
     environment = {
       "LLAMA_ARG_MODELS_DIR" = "/models";
-      "LLAMA_ARG_MODELS_PRESET" = ".presets.ini";
+      "LLAMA_ARG_MODELS_PRESET" = "/models/presets.ini";
       "LLAMA_ARG_PORT" = "8080";
     };
     volumes = [
-      "/home/matty/llama/models:/models:rw"
+      "/home/matty/.config/llamacpp/models:/models:rw"
     ];
     ports = [
       "8080:8080/tcp"
