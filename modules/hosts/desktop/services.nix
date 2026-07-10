@@ -40,5 +40,5 @@
 	services.scx = {
 		scheduler = "scx_rusty";
 		extraArgs = [];
-	}
+	};
 }
