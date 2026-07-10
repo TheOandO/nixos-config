@@ -57,15 +57,13 @@
 	services.gnome.gnome-keyring.enable = true;
 	systemd.user.services.niri.enableDefaultPath = false;
 
-	# services.scx = {
-	#   enable = true;
-	#   package = pkgs.scx.rustscheds;
-	#   # - scx_bpfland: good for responsive desktop under heavy background load
-	#   # - scx_lavd: built for the Steam Deck to eliminate gaming micro-stutter
-	#   # - scx_cosmos: good desktop and server default, less battle-tested?
-	#   scheduler = "scx_bpfland";
-	#   extraArgs = [ ];
-	# };
+	services.scx = {
+	  # - scx_bpfland: good for responsive desktop under heavy background load
+	  # - scx_lavd: built for the Steam Deck to eliminate gaming micro-stutter
+	  # - scx_cosmos: good desktop and server default, less battle-tested?
+	  scheduler = "scx_bpfland";
+	  extraArgs = [ ];
+	};
 
 	environment.systemPackages = [ pkgs.libheif pkgs.libheif.out ];
 	environment.pathsToLink = [ "share/thumbnailers" ];
