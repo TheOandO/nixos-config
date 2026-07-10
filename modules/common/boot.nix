@@ -8,7 +8,7 @@
 		efiSupport = true;
 		style = {
 			wallpapers = [
-		    	./wallpapers/wallhaven-rq7leq.jpg
+		    	../../wallpapers/wallhaven-rq7leq.jpg
 		    ];
 		    wallpaperStyle = "tiled";
 		};
