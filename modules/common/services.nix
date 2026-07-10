@@ -52,13 +52,13 @@
 	services.samba = {
 	    package = pkgs.samba4Full;
 	    usershares.enable = true;
-	    enable = true;
+	    enable = false;
 	    openFirewall = true;
 	};
 
 	# Required for Nautilus to discover shares on the network
 	services.samba-wsdd = {
-		enable = true;
+		enable = false;
 		openFirewall = true;
 	};
 
