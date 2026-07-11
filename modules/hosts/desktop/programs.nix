@@ -33,6 +33,10 @@
 		inputs.freesmlauncher.packages.${pkgs.stdenv.hostPlatform.system}.default
 
 		clinfo
+		(fluent-icon-theme.override {
+			colorVariants = [ "green" "orange" ];
+		})
+		fluent-gtk-theme
 		nordic
 		kdePackages.qtstyleplugin-kvantum
 		libsForQt5.qtstyleplugin-kvantum
@@ -46,8 +50,6 @@
 		goverlay
 		mangohud
 	];
-
-	#fonts.packages = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 
 	programs.hyprland.enable = true;
 
