@@ -30,6 +30,11 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+		snappy-switcher = {
+			url = "github:OpalAayan/snappy-switcher";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};			
+
 		dolphin-overlay.url = "github:rumboon/dolphin-overlay";
 	};
 
@@ -41,6 +46,7 @@
 		dolphin-overlay,
 		freesmlauncher,
 		compose2nix,
+		snappy-switcher,
 		...
 	} @ inputs:
 		{

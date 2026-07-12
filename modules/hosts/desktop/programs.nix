@@ -31,12 +31,22 @@
 		kdePackages.kde-cli-tools
 
 		inputs.freesmlauncher.packages.${pkgs.stdenv.hostPlatform.system}.default
-
+		inputs.snappy-switcher.packages.${pkgs.stdenv.hostPlatform.system}.default
+		
 		clinfo
 		(fluent-icon-theme.override {
 			colorVariants = [ "green" "orange" ];
 		})
-		fluent-gtk-theme
+		(fluent-gtk-theme.overrideAttrs (old: {
+		  installPhase = ''
+		    bash install.sh \
+		      --dest $out/share/themes \
+		      --theme green orange \
+		      --color dark \
+		      --size standard
+		  '';
+		}))
+
 		nordic
 		kdePackages.qtstyleplugin-kvantum
 		libsForQt5.qtstyleplugin-kvantum
