@@ -15,13 +15,4 @@
 	{ device = "/dev/disk/by-uuid/40a40c3d-72e7-4ad2-a2fa-6e93ff0cf9fb";
 		fsType = "ext4";
 	};
-
-	fonts = {
-		packages = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
-		fontconfig.defaultFonts = {
-		    serif = [ "BigBlueTerm Nerd Font" ];
-		    sansSerif = [ "0xProto Nerd Font" ];
-		    monospace = [ "DejaVuSansM Nerd Font" ];
-		  };
-	};	
 }

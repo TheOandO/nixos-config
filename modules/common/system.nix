@@ -27,4 +27,14 @@
     		shell = pkgs.fish;
     		packages = with pkgs; [];
   	};
+
+  	fonts = {
+  	        packages = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
+  	        fontconfig.defaultFonts = {
+  	            serif = [ "BigBlueTerm Nerd Font" ];
+  	            sansSerif = [ "0xProto Nerd Font" ];
+  	            monospace = [ "DejaVuSansM Nerd Font" ];
+  	          };
+  	};      
+}
 }
