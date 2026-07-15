@@ -63,13 +63,13 @@
 
 	programs.hyprland.enable = true;
 
-	programs.dconf.profiles.user.databases = [
-		{
-	    	settings."org/gnome/desktop/interface" = {
-	    		color-scheme = "prefer-dark";
-	    	};
-	    }
-	];
+	# programs.dconf.profiles.user.databases = [
+	# 	{
+	#     	settings."org/gnome/desktop/interface" = {
+	#     		color-scheme = "prefer-dark";
+	#     	};
+	#     }
+	# ];
 
 	programs.steam = {
 	  enable = true; # Master switch, already covered in installation
