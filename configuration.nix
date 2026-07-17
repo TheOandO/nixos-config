@@ -16,10 +16,10 @@
 
   	# Allow unfree packages
   	nixpkgs.config.allowUnfree = true;
-# 
-# 	nixpkgs.config.permittedInsecurePackages = [
-# 		"pnpm-10.29.2"
-# 	];
+
+    nixpkgs.config.permittedInsecurePackages = [
+    	"electron-40.10.5"
+    ];
 
 	nix.settings.experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
 
