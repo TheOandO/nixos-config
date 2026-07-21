@@ -36,6 +36,12 @@
     	fishPlugins.grc
     	grc
 
+		lsfg-vk
+		lsfg-vk-ui
+		heroic
+		protonplus
+		goverlay
+		mangohud    	
 	];
 
 	# Some programs need SUID wrappers, can be configured further or are
@@ -55,4 +61,11 @@
         	color-scheme = "prefer-dark";
         };
     }];
+
+    programs.steam = {
+      enable = true; # Master switch, already covered in in>
+      remotePlay.openFirewall = true;  # Open ports in the >
+      dedicatedServer.openFirewall = true; # Open ports for>
+    };
+    programs.gamemode.enable = true;
 }

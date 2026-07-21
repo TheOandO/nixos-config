@@ -52,31 +52,9 @@
 		libsForQt5.qtstyleplugin-kvantum
 
 		inputs.compose2nix.packages.x86_64-linux.default
-		
-		lsfg-vk
-		lsfg-vk-ui
-		heroic
-		protonplus
-		goverlay
-		mangohud
 	];
 
 	programs.hyprland.enable = true;
-
-	# programs.dconf.profiles.user.databases = [
-	# 	{
-	#     	settings."org/gnome/desktop/interface" = {
-	#     		color-scheme = "prefer-dark";
-	#     	};
-	#     }
-	# ];
-
-	programs.steam = {
-	  enable = true; # Master switch, already covered in installation
-	  remotePlay.openFirewall = true;  # Open ports in the firewall for Steam Remote Play
-	  dedicatedServer.openFirewall = true; # Open ports for Source Dedicated Server hosting
-	};
-	programs.gamemode.enable = true;
 
 	virtualisation.docker = {
 		rootless = {
