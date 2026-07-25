@@ -67,6 +67,7 @@
 	
 	programs.fish.functions.rebuild = ''
 		cd /etc/nixos
+		sudo nix flake update
 		sudo git add .
 		read -P "Commit message (leave empty for default): " msg
 		if test -z "$msg"
@@ -76,7 +77,6 @@
 		sudo git fetch origin
 		sudo git rebase -X ours origin/main; or true
 		sudo git push --force
-		sudo nix flake update
 	  	sudo nixos-rebuild switch --upgrade-all --flake .#desktop
 	'';
 }
