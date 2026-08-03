@@ -47,7 +47,6 @@
 		  '';
 		}))
 
-		nordic
 		kdePackages.qtstyleplugin-kvantum
 		libsForQt5.qtstyleplugin-kvantum
 
