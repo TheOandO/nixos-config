@@ -27,7 +27,8 @@
 		libreoffice-fresh
 		obsidian
 		gparted
-
+		qbittorrent
+		
 		# Fish shell plugins
     	fishPlugins.tide
     	fishPlugins.done
