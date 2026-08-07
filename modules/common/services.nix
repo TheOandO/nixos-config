@@ -71,4 +71,6 @@
 		  # scheduler = "scx_cake";
 		  # extraArgs = [ ];
 	};
+
+	hardware.uinput.enable = true;
 }
