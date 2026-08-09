@@ -84,14 +84,14 @@
 			cd /etc/nixos
 			sudo git stash
 			sudo git pull
-			sudo git clear
+			sudo git stash clear
 			sudo nixos-rebuild switch --upgrade-all --flake .#desktop
 		'';
 		pull-dot = ''
 			cd ~/.config
 			sudo git stash
 			sudo git pull
-			sudo git clear
+			sudo git stash clear
 		'';
 	};
 
