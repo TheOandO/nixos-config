@@ -1,12 +1,20 @@
 { config, pkgs, ... }:
 
 {
-  	# Define a user account. Don't forget to set a password with ‘passwd’.
-  	# users.users."matty" = {
-   #  		isNormalUser = true;
-   #  		description = "Matty";
-   #  		extraGroups = [ "networkmanager" "wheel" "samba" ];
-   #  		shell = pkgs.fish;
-   #  		packages = with pkgs; [];
-  	# };
+	fileSystems."/mnt/nas" = {
+		device = "//mattyomv.local/NAS/";
+	    fsType = "cifs";
+	    options = let
+	    	automount_opts = "x-systemd.automount,noauto";
+	    in [
+	        "credentials=/etc/nixos/credentials/omv"
+	        "_netdev"
+	        "uid=1000"
+	        "gid=100"
+	        "file_mode=0664"
+	        "dir_mode=0775"
+	        automount_opts
+	     ];
+	};
+}
 }
