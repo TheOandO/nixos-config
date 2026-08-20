@@ -31,7 +31,8 @@
 		kdePackages.kde-cli-tools
 
 		inputs.freesmlauncher.packages.${pkgs.stdenv.hostPlatform.system}.default
-		# inputs.snappy-switcher.packages.${pkgs.stdenv.hostPlatform.system}.default
+		#inputs.snappy-switcher.packages.${pkgs.stdenv.hostPlatform.system}.default
+		#inputs.caelestia-shell.packages.${pkgs.stdenv.hostPlatform.system}.with-cli
 		
 		clinfo
 		(fluent-icon-theme.override {

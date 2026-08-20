@@ -33,7 +33,12 @@
 		snappy-switcher = {
 			url = "github:OpalAayan/snappy-switcher";
 			inputs.nixpkgs.follows = "nixpkgs";
-		};			
+		};
+
+		caelestia-shell = {
+		    url = "github:caelestia-dots/shell";
+		    inputs.nixpkgs.follows = "nixpkgs";
+		};
 
 		dolphin-overlay.url = "github:rumboon/dolphin-overlay";
 	};
@@ -47,6 +52,7 @@
 		freesmlauncher,
 		compose2nix,
 		snappy-switcher,
+		caelestia-shell,
 		...
 	} @ inputs:
 		{
@@ -63,6 +69,23 @@
 				        ./modules/hosts/laptop/networking.nix
 				        ./modules/hosts/laptop/security.nix
 				        ./modules/hosts/laptop/system.nix
+
+						{
+						    nixpkgs.overlays = [
+						    	(final: prev: {
+						    		snappy-switcher = prev.snappy-switcher.overrideAttrs (old: {
+						    	    	postInstall = builtins.replaceStrings
+						    	        	[ ''substituteInPlace snappy-switcher.service \
+						    	            	--replace-fail "/usr/local" "$out"'' ]
+						    	       		[ ''substituteInPlace snappy-switcher.service \
+						    	            	--replace-fail "/usr/bin/snappy-switcher" "$out/bin/snappy-switcher"'' ]
+						    	        	old.postInstall;
+						    	    });
+						    	  })
+						    ];							
+						}
+
+
 				        home-manager.nixosModules.home-manager
 				        {
 					          home-manager.useGlobalPkgs = true;
@@ -90,6 +113,7 @@
 				        ./modules/hosts/desktop/networking.nix
 				        ./modules/hosts/desktop/security.nix
 				        ./modules/hosts/desktop/system.nix
+
 
 					    home-manager.nixosModules.home-manager
 					    {
