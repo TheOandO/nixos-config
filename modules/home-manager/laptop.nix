@@ -9,7 +9,12 @@
       		package = pkgs.papirus-icon-theme;
     	};
     	gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
-    	gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
+    	gtk4.extraConfig = {
+	    	gtk-application-prefer-dark-theme = 1;
+	    	gtk-icon-theme-name = "Adwaita";
+			gtk-theme-name = "Adwaita";
+			color-scheme = "prefer-dark";
+		};
   	};
 
 	programs.fish.functions = {

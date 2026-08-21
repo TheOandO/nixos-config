@@ -8,6 +8,7 @@
     	nautilus
 		vscodium
 		gparted
+		adwaita-qt
 		#Icon theme
 		papirus-icon-theme
 
