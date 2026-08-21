@@ -15,7 +15,15 @@
 
 	xdg.userDirs.enable = true;
 	xdg.userDirs.setSessionVariables = false;
-	
+
+	dconf = {
+		enable = true;
+		settings = {
+			"org/gnome/desktop/interface" = {
+		    	color-scheme = "prefer-dark";
+		    };
+		};
+	};
 
   	programs.git = {
   	  	enable = true;

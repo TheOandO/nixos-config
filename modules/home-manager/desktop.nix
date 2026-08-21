@@ -4,13 +4,6 @@
 		enable = true;
 	};
 
-	# gtk = {
-	# 	enable = true;
-	# 	iconTheme = {
-	# 		name = "Nordic-green";
-	#   };
-	# };
-
 	xdg.mimeApps = {
 		enable = true;
 		defaultApplications = {
@@ -79,7 +72,7 @@
 				sudo git rebase -X ours origin/main; or true
 				sudo git push --force
 			  	sudo nixos-rebuild switch --upgrade-all --flake .#desktop
-			'';	
+		'';	
 		pull-nix = ''
 			cd /etc/nixos
 			sudo git stash
