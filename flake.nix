@@ -40,6 +40,11 @@
 		    inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+		hyprmod = {
+			url = "github:BlueManCZ/hyprmod";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
 		dolphin-overlay.url = "github:rumboon/dolphin-overlay";
 	};
 
@@ -53,6 +58,7 @@
 		compose2nix,
 		snappy-switcher,
 		caelestia-shell,
+		hyprmod,
 		...
 	} @ inputs:
 		{

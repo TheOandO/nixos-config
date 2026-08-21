@@ -161,6 +161,26 @@
         "type": "github"
       }
     },
+    "hyprmod": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1787208859,
+        "narHash": "sha256-f8ygnyOlwXGfM31+GB+B8y7TYDShyzHKuPo1ww+uxtQ=",
+        "owner": "BlueManCZ",
+        "repo": "hyprmod",
+        "rev": "bf5b55a9a89d7eab5a6d6947743de9dcb1cacd4a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BlueManCZ",
+        "repo": "hyprmod",
+        "type": "github"
+      }
+    },
     "libnbtplusplus": {
       "flake": false,
       "locked": {
@@ -270,11 +290,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787234716,
-        "narHash": "sha256-O07tHqxugZ/XE/90kx/UCZ0YCbHSI88v2ct2ezuCKi4=",
+        "lastModified": 1787311790,
+        "narHash": "sha256-unzdxVphY9aAR+GX8U1hZzgBPYhq5kf+8SGOcRUm/P8=",
         "owner": "noctalia-dev",
         "repo": "noctalia",
-        "rev": "a064c063f204518619b8c032c944138a0349966b",
+        "rev": "69a90183531de388cab40e84a3a221ba94464501",
         "type": "github"
       },
       "original": {
@@ -333,6 +353,7 @@
         "dolphin-overlay": "dolphin-overlay",
         "freesmlauncher": "freesmlauncher",
         "home-manager": "home-manager",
+        "hyprmod": "hyprmod",
         "nixpkgs": "nixpkgs_2",
         "noctalia": "noctalia",
         "snappy-switcher": "snappy-switcher",

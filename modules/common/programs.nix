@@ -28,6 +28,10 @@
 		obsidian
 		gparted
 		qbittorrent
+
+    	inputs.hyprmod.packages.${pkgs.stdenv.hostPlatform.system}.default
+		inputs.snappy-switcher.packages.${pkgs.stdenv.hostPlatform.system}.default
+		# inputs.caelestia-shell.packages.${pkgs.stdenv.hostPlatform.system}.with-cli
 		
 		# Fish shell plugins
     	fishPlugins.tide
