@@ -38,7 +38,7 @@
 
 	services.lact.enable = true;
 	services.scx = {
-		scheduler = "scx_rusty";
+		scheduler = "scx_lavd";
 		extraArgs = [];
 	};
 	services.sunshine = {
