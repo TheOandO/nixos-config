@@ -12,7 +12,6 @@
 		gnome-themes-extra
 		gsettings-desktop-schemas
 		glib
-		polkit_gnome
 		#Icon theme
 		papirus-icon-theme
 
