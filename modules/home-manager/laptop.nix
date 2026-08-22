@@ -8,21 +8,40 @@
 			name = "Papirus-Dark";
 		    package = pkgs.papirus-icon-theme;
 		};
-		gtk3.extraConfig = {
-		    gtk-application-prefer-dark-theme = 1;
-			gtk-theme-name = "Adwaita";
-		};
-		gtk4.extraConfig = {
-		    gtk-application-prefer-dark-theme = 1;
-		    gtk-theme-name = "Adwaita";
-		};
+  		gtk3 = {
+    		extraConfig = {
+      			gtk-application-prefer-dark-theme = 1;
+    		};
+  		};
+
+  		gtk4 = {
+   			extraConfig = {
+      			gtk-application-prefer-dark-theme = 1;
+    		};
+  		};
 	};
 
-	dconf.settings = {
-	  	"org/gnome/desktop/interface" = {
-	    	color-scheme = "prefer-dark";
-	    	gtk-theme = "Adwaita";
-	  	};
+  	dconf = {
+    	settings = {
+      		"org/gnome/desktop/interface" = {
+				color-scheme = "prefer-dark";
+      		};
+    	};
+	};
+
+	qt = {
+	    enable = true;
+		platformTheme.name = "Adwaita-dark";
+	    style = {
+	      	name = "Adwaita-dark";
+	      	package = pkgs.adwaita-qt;
+	    };
+	};
+	
+	xdg.portal = {
+	    enable = true;
+	    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+	    configPackages = with pkgs; [ xdg-desktop-portal-gtk ];
 	};
 
 	home.sessionVariables = {

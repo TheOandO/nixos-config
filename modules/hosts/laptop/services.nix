@@ -24,16 +24,7 @@
 	    	TimeoutStopSec = 10;
 	  	};
 	};
-
-	xdg.portal = {
-		enable = true;
-		extraPortals = [ 
-			pkgs.xdg-desktop-portal-gtk
-			pkgs.xdg-desktop-portal-hyprland
-		];
-		config.common.default = "*";
-	};
-
+	
 	environment.systemPackages = [ pkgs.libheif pkgs.libheif.out ];
 	environment.pathsToLink = [ "share/thumbnailers" ];
 }
