@@ -2,20 +2,36 @@
 {
 	# xdg.configFile."niri/config.kdl".source = ./config.kdl;
 	
-  	gtk = {
-    	enable = true;
-    	iconTheme = {
-      		name = "Papirus-Dark";
-      		package = pkgs.papirus-icon-theme;
-    	};
-    	gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
-    	gtk4.extraConfig = {
-	    	gtk-application-prefer-dark-theme = 1;
-	    	gtk-icon-theme-name = "Adwaita";
-			gtk-theme-name = "Adwaita";
-			color-scheme = "prefer-dark";
+	gtk = {
+		enable = true;
+		iconTheme = {
+			name = "Papirus-Dark";
+		    package = pkgs.papirus-icon-theme;
 		};
-  	};
+		gtk3.extraConfig = {
+		    gtk-application-prefer-dark-theme = 1;
+			gtk-theme-name = "Adwaita";
+		};
+		gtk4.extraConfig = {
+		    gtk-application-prefer-dark-theme = 1;
+		    gtk-theme-name = "Adwaita";
+		};
+	};
+
+	dconf.settings = {
+	  	"org/gnome/desktop/interface" = {
+	    	color-scheme = "prefer-dark";
+	    	gtk-theme = "Adwaita";
+	  	};
+	};
+
+	home.sessionVariables = {
+		GTK_THEME = "Adwaita";
+		GSETTINGS_SCHEMA_DIR = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas";
+	};
+
+
+
 
 	programs.fish.functions = {
 		rebuild = ''

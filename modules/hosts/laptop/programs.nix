@@ -9,6 +9,10 @@
 		vscodium
 		gparted
 		adwaita-qt
+		gnome-themes-extra
+		gsettings-desktop-schemas
+		glib
+		polkit_gnome
 		#Icon theme
 		papirus-icon-theme
 
@@ -21,3 +25,4 @@
 	programs.nautilus-open-any-terminal.enable = true;
 	programs.dconf.enable = true;
 }
+
