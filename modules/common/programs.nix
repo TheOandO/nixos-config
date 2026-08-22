@@ -24,7 +24,7 @@
 		inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
 		vesktop
 		vscode-fhs
-		libreoffice-fresh
+		libreoffice-stable
 		obsidian
 		gparted
 		qbittorrent
