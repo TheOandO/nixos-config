@@ -61,9 +61,9 @@
 			  	if test -z "$msg"
 			    	set msg "update: "(date +%Y-%m-%d)
 			  	end
-			  	sudo git commit -m "$msg"; or true
+				sudo git commit -m "$msg"; or true
 				sudo git fetch origin
-				sudo git rebase -X ours origin/main; or true
+				sudo git rebase -X ours origin/(sudo git branch --show-current); or true
 				sudo git push --force
 			  	sudo nixos-rebuild switch --upgrade-all --flake .#laptop
 		'';
