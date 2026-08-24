@@ -12,6 +12,8 @@
 		gnome-themes-extra
 		gsettings-desktop-schemas
 		glib
+		gedit
+		
 		#Icon theme
 		papirus-icon-theme
 

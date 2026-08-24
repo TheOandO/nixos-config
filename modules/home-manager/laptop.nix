@@ -54,18 +54,35 @@
 
 	programs.fish.functions = {
 		rebuild = ''
-			  	cd /etc/nixos
-			  	sudo nix flake update
-			  	sudo git add .
-			  	read -P "Commit message (leave empty for default): " msg
-			  	if test -z "$msg"
-			    	set msg "update: "(date +%Y-%m-%d)
-			  	end
-				sudo git commit -m "$msg"; or true
-				sudo git fetch origin
-				sudo git rebase -X ours origin/(sudo git branch --show-current); or true
-				sudo git push --force
-			  	sudo nixos-rebuild switch --upgrade-all --flake .#laptop
+			cd /etc/nixos
+
+			echo "🔄 Updating flake inputs..."
+			sudo nix flake update
+
+			echo "📦 Staging local changes..."
+			sudo git add .
+
+			read -P "Commit message (leave empty for default): " msg
+			if test -z "$msg"
+				set msg "update: "(date +%Y-%m-%d)
+			end
+
+			echo "💾 Committing changes..."
+			sudo git commit -m "$msg"; or true
+
+			echo "🔄 Fetching from remote..."
+			sudo git fetch origin
+
+			echo "⚡ Rebasing with local changes taking priority..."
+			sudo git rebase -X ours origin/(sudo git branch --show-current); or true
+
+			echo "⬆️  Force pushing to remote..."
+			sudo git push --force
+
+			echo "🔨 Rebuilding NixOS (with upgrades)..."
+			sudo nixos-rebuild switch --upgrade-all --flake .#laptop
+
+			echo "✅ Done!"
 		'';
         pull-nix = ''
         	cd /etc/nixos

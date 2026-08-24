@@ -15,7 +15,6 @@
 		git
 		wev
 		glib
-		gedit
 		sbctl
 		nwg-look
 		
