@@ -31,6 +31,9 @@
 
 		libsForQt5.qt5ct
 		libsForQt5.qtstyleplugin-kvantum
+
+		kara
+		cava
 		
 		desktop-file-utils
   		xdg-utils
