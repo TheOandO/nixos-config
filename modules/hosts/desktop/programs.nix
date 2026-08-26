@@ -2,35 +2,32 @@
 {
 	environment.systemPackages = with pkgs; [
 		# for kde stuff
-		kdePackages = {
-			dolphin
-			ark
-			kate		
-			ktexteditor
-			konsole
-			gwenview
-			qtsvg
-			kio
-			kio-fuse
-			kio-extras
-			kio-admin
-			kservice
-			kcalc
-			qtsvg 
-			qtwayland
-			kcoreaddons
-			kiconthemes
-			dolphin-plugins
-			ffmpegthumbs
-			krdp
-			kimageformats # provides Qt plugins
-			qtimageformats # provides optional image formats such as .webp and .avif
-			kfilemetadata
-			qt6ct
-			plasma-workspace
-			kde-cli-tools
-			qtstyleplugin-kvantum
-		}
+		kdePackages.dolphin
+		kdePackages.ark
+		kdePackages.kate
+		kdePackages.ktexteditor
+		kdePackages.konsole
+		kdePackages.gwenview
+		kdePackages.qtsvg
+		kdePackages.kio
+		kdePackages.kio-fuse
+		kdePackages.kio-extras
+		kdePackages.kio-admin
+		kdePackages.kservice
+		kdePackages.kcalc
+		kdePackages.qtwayland
+		kdePackages.kcoreaddons
+		kdePackages.kiconthemes
+		kdePackages.dolphin-plugins
+		kdePackages.ffmpegthumbs
+		kdePackages.krdp
+		kdePackages.kimageformats # provides Qt plugins
+		kdePackages.qtimageformats # provides optional image formats such as .webp and .avif
+		kdePackages.kfilemetadata
+		kdePackages.qt6ct
+		kdePackages.plasma-workspace
+		kdePackages.kde-cli-tools
+		kdePackages.qtstyleplugin-kvantum
 
 		libsForQt5.qt5ct
 		libsForQt5.qtstyleplugin-kvantum
