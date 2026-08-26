@@ -48,28 +48,30 @@
 		mangohud    	
 	];
 
-	# Some programs need SUID wrappers, can be configured further or are
-  	# started in user sessions.
-  	programs.mtr.enable = true;
-  	programs.gnupg.agent = {
+	programs = {
+		# Some programs need SUID wrappers, can be configured further or are
+		# started in user sessions.
+		mtr.enable = true;
+		gnupg.agent = {
     		enable = true;
     		enableSSHSupport = true;
-  	};
+		};
 
-  	programs.fish.enable = true;
- 	programs.firefox.enable = true;
+		fish.enable = true;
+		firefox.enable = true;
 
-    programs.dconf.profiles.user.databases = [
-    {
-    	settings."org/gnome/desktop/interface" = {
-        	color-scheme = "prefer-dark";
-        };
-    }];
+		dconf.profiles.user.databases = [
+		{
+			settings."org/gnome/desktop/interface" = {
+				color-scheme = "prefer-dark";
+			};
+		}];
 
-    programs.steam = {
-      enable = true; # Master switch, already covered in in>
-      remotePlay.openFirewall = true;  # Open ports in the >
-      dedicatedServer.openFirewall = true; # Open ports for>
-    };
-    programs.gamemode.enable = true;
+		steam = {
+			enable = true; # Master switch, already covered in in>
+			remotePlay.openFirewall = true;  # Open ports in the >
+			dedicatedServer.openFirewall = true; # Open ports for>
+		};
+		gamemode.enable = true;
+	};
 }

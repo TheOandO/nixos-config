@@ -22,8 +22,11 @@
 
 	# Some programs need SUID wrappers, can be configured further or are
   	# started in user sessions.
-	programs.hyprland.enable = true;
-	programs.nautilus-open-any-terminal.enable = true;
-	programs.dconf.enable = true;
+
+	programs = {
+		hyprland.enable = true;
+		nautilus-open-any-terminal.enable = true;
+		dconf.enable = true;
+	};
 }
 

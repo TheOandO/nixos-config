@@ -1,7 +1,13 @@
 { config, pkgs, ... }:
 
 {
-	security.pam.services.login.fprintAuth = false;
-    security.polkit.enable = true;
-    security.pam.services.hyprland.enableGnomeKeyring = true;
+    security = {
+        pam = {
+            services = {
+                login.fprintAuth = false;
+                hyprland.enableGnomeKeyring = true;
+            };
+        };
+        polkit.enable = true;
+    };
 }

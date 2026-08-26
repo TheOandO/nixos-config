@@ -4,30 +4,43 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-	  imports =
-	    [ (modulesPath + "/installer/scan/not-detected.nix")
-	    ];
+	imports =
+	[
+		(modulesPath + "/installer/scan/not-detected.nix")
+	];
 
-	  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "sdhci_pci" ];
-	  boot.initrd.kernelModules = [ ];
-	  boot.kernelModules = [ "kvm-intel" ];
-	  boot.extraModulePackages = [ ];
+	boot = {
+		initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "sdhci_pci" ];
+		initrd.kernelModules = [ ];
+		kernelModules = [ "kvm-intel" ];
+		extraModulePackages = [ ];
+	};
 
-	  fileSystems."/" =
-	    	{ 	device = "/dev/disk/by-uuid/1e986e3f-3087-4fce-bcff-75c3d2ad5ec2";
-	      		fsType = "ext4";
-	    	};
+	fileSystems = {
+		"/" =
+		{ 	device = "/dev/disk/by-uuid/1e986e3f-3087-4fce-bcff-75c3d2ad5ec2";
+			fsType = "ext4";
+		};
 
-	  fileSystems."/boot" =
-	  { 	device = "/dev/disk/by-uuid/850D-6EBB";
-	      	fsType = "vfat";
-	      	options = [ "fmask=0077" "dmask=0077" ];
-	  };
+		"/boot" =
+		{ 	device = "/dev/disk/by-uuid/850D-6EBB";
+			fsType = "vfat";
+			options = [ "fmask=0077" "dmask=0077" ];
+		};
+	};
 
   	swapDevices = [ ];
 
   	nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  	hardware.cpu.intel.npu.enable = true;
-  	hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-	hardware.bluetooth.enable = true;
+
+	hardware = {
+		cpu = {
+			intel = {
+				npu.enable = true;
+				updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+			};
+		};
+
+		bluetooth.enable = true;
+	};
 }

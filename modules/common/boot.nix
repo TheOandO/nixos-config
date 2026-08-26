@@ -1,20 +1,22 @@
 { config, pkgs, ... }:
 
 {
-	# Bootloader.
-	boot.loader.systemd-boot.enable = false;
-	boot.loader.limine = {
-		enable = true;
-		efiSupport = true;
-		style = {
-			wallpapers = [
-		    	../../wallpapers/wallhaven-rq7leq.jpg
-		    ];
-		    wallpaperStyle = "tiled";
+  	boot = {
+		loader = {
+			systemd-boot.enable = false;
+			limine = {
+				enable = true;
+				efiSupport = true;
+				style = {
+					wallpapers = [
+						../../wallpapers/wallhaven-rq7leq.jpg
+					];
+					wallpaperStyle = "tiled";
+				};
+			};
+			efi.canTouchEfiVariables = true;
 		};
-	};
-  	boot.loader.efi.canTouchEfiVariables = true;
 
-  	# Use latest kernel.
-  	boot.kernelPackages = pkgs.linuxPackages_latest;
+		kernelPackages = pkgs.linuxPackages_latest;
+  	};
 }

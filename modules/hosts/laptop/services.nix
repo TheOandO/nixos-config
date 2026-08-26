@@ -1,16 +1,20 @@
 { config, lib, pkgs, modulesPath, ... }:
 {
-	services.gnome.gnome-keyring.enable = true;
-	systemd.user.services.niri.enableDefaultPath = false;
+# 	systemd.user.services.niri.enableDefaultPath = false;
+	services  = {
+		gnome.gnome-keyring.enable = true;
 
-	services.scx = {
-	  # - scx_bpfland: good for responsive desktop under heavy background load
-	  # - scx_lavd: built for the Steam Deck to eliminate gaming micro-stutter
-	  # - scx_cosmos: good desktop and server default, less battle-tested?
-	  scheduler = "scx_bpfland";
-	  extraArgs = [ ];
+		scx = {
+			# - scx_bpfland: good for responsive desktop under heavy background load
+			# - scx_lavd: built for the Steam Deck to eliminate gaming micro-stutter
+			# - scx_cosmos: good desktop and server default, less battle-tested?
+			scheduler = "scx_bpfland";
+			extraArgs = [ ];
+		};
 	};
 
-	environment.systemPackages = [ pkgs.libheif pkgs.libheif.out ];
-	environment.pathsToLink = [ "share/thumbnailers" ];
+	environment = {
+		systemPackages = [ pkgs.libheif pkgs.libheif.out ];
+		pathsToLink = [ "share/thumbnailers" ];
+	};
 }

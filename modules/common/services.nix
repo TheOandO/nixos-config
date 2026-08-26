@@ -1,75 +1,81 @@
 { config, lib, pkgs, modulesPath, ... }:
 {
-	# X11 keymap
-	services.xserver.xkb = {
-		layout = "us";
-		variant = "";
-	};
+	services = {
+		# X11 keymap
+		xserver.xkb = {
+			layout = "us";
+			variant = "";
+		};
 
-	# List services that you want to enable:
-    services.displayManager = {
-    	sddm.enable = true;
+		# List services that you want to enable:
+		displayManager = {
+			sddm = {
+				enable = true;
 
-        sddm.wayland = {
-        	enable = true;
-        };
-        autoLogin = {
-            enable = false;
-            user = "matty";
-        };
-     };
+				wayland = {
+					enable = true;
+				};
+			};
 
-	# Enable the OpenSSH daemon.
-    services.openssh.enable = true;
+			autoLogin = {
+				enable = false;
+				user = "matty";
+			};
+		};
 
-	services.gvfs.enable = true;
-	
-	# Power profiles daemon
-    services.power-profiles-daemon.enable = true;
-    services.upower.enable = true;
+		# Enable the OpenSSH daemon.
+		openssh.enable = true;
 
-	services.tailscale = {
-		enable = true;
-		# Enable tailscale at startup
-		#authKeyFile = "/run/secrets/tailscale_key";
+		gvfs.enable = true;
 
-	};
+		# Power profiles daemon
+		power-profiles-daemon.enable = true;
+		upower.enable = true;
 
-	services.avahi = {
-		enable = true;
-		nssmdns4 = true;
-		openFirewall = true;
-	};
+		tailscale = {
+			enable = true;
+			# Enable tailscale at startup
+			#authKeyFile = "/run/secrets/tailscale_key";
 
-	services.syncthing = {
-	  	enable = true;
-	  	openDefaultPorts = true; # Open ports in the firewall for Syncthing. (NOTE: this will not open syncthing gui port)
-		user = "matty";
-		dataDir = "/home/matty";
-		configDir = "/home/matty/.config/syncthing";
-	};
+		};
 
-	services.samba = {
-	    package = pkgs.samba4Full;
-	    usershares.enable = true;
-	    enable = false;
-	    openFirewall = true;
-	};
+		avahi = {
+			enable = true;
+			nssmdns4 = true;
+			openFirewall = true;
+		};
 
-	# Required for Nautilus to discover shares on the network
-	services.samba-wsdd = {
-		enable = false;
-		openFirewall = true;
-	};
+		syncthing = {
+			enable = true;
+			openDefaultPorts = true; # Open ports in the firewall for Syncthing. (NOTE: this will not open syncthing gui port)
+			user = "matty";
+			dataDir = "/home/matty";
+			configDir = "/home/matty/.config/syncthing";
+		};
 
-	services.scx = {
-		  enable = true;
-		  package = pkgs.scx.rustscheds;
-		  # - scx_bpfland: good for responsive desktop under heavy background load
-		  # - scx_lavd: built for the Steam Deck to eliminate gaming micro-stutter
-		  # - scx_cosmos: good desktop and server default, less battle-tested?
-		  # scheduler = "scx_cake";
-		  # extraArgs = [ ];
+		samba = {
+			package = pkgs.samba4Full;
+			usershares.enable = true;
+			enable = false;
+			openFirewall = true;
+		};
+
+		# Required for Nautilus to discover shares on the network
+		samba-wsdd = {
+			enable = false;
+			openFirewall = true;
+		};
+
+		scx = {
+			enable = true;
+			package = pkgs.scx.rustscheds;
+			# - scx_bpfland: good for responsive desktop under heavy background load
+			# - scx_lavd: built for the Steam Deck to eliminate gaming micro-stutter
+			# - scx_cosmos: good desktop and server default, less battle-tested?
+			# scheduler = "scx_cake";
+			# extraArgs = [ ];
+		};
+
 	};
 
 	hardware.uinput.enable = true;
