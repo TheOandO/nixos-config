@@ -26,14 +26,20 @@
 		kdePackages.kfilemetadata
 		kdePackages.qt6ct
 		kdePackages.plasma-workspace
+		kdePackages.plasma-desktop
 		kdePackages.kde-cli-tools
 		kdePackages.qtstyleplugin-kvantum
 
 		libsForQt5.qt5ct
 		libsForQt5.qtstyleplugin-kvantum
 
-		kara
+		
+		kurve
 		cava
+	  	(python3.withPackages (ps: with ps; [
+	    	websockets
+	  	]))
+		qt6.qtwebsockets
 		
 		desktop-file-utils
   		xdg-utils
@@ -57,8 +63,9 @@
 		inputs.compose2nix.packages.x86_64-linux.default
 	];
 
-	programs.hyprland.enable = true;
-
+	programs = {
+		hyprland.enable = true;
+	};
 	virtualisation.docker = {
 		rootless = {
 			enable = true;
