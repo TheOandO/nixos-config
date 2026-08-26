@@ -52,6 +52,6 @@
 			openFirewall = true;
 		};
 
-		plasma6.enable = true;
+		desktopManager.plasma6.enable = true;
 	};
 }
