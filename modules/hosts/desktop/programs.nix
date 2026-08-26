@@ -1,34 +1,42 @@
 { config, pkgs, inputs, lib,  ... }:
 {
 	environment.systemPackages = with pkgs; [
-		kdePackages.dolphin
-		kdePackages.ark
-		kdePackages.kate		
-		kdePackages.ktexteditor
-		kdePackages.gwenview
-		kdePackages.qtsvg
-		kdePackages.kio
-		kdePackages.kio-fuse
-		kdePackages.kio-extras
-		kdePackages.kio-admin
-		kdePackages.kservice
-		kdePackages.kcalc
-		kdePackages.qtsvg 
-		kdePackages.qtwayland
-		kdePackages.kcoreaddons
-		kdePackages.kiconthemes
-		kdePackages.dolphin-plugins
-		kdePackages.ffmpegthumbs
-		kdePackages.krdp
-		kdePackages.kimageformats # provides Qt plugins
-		kdePackages.qtimageformats # provides optional image formats such as .webp and .avif
-		kdePackages.kfilemetadata
+		# for kde stuff
+		kdePackages = {
+			dolphin
+			ark
+			kate		
+			ktexteditor
+			konsole
+			gwenview
+			qtsvg
+			kio
+			kio-fuse
+			kio-extras
+			kio-admin
+			kservice
+			kcalc
+			qtsvg 
+			qtwayland
+			kcoreaddons
+			kiconthemes
+			dolphin-plugins
+			ffmpegthumbs
+			krdp
+			kimageformats # provides Qt plugins
+			qtimageformats # provides optional image formats such as .webp and .avif
+			kfilemetadata
+			qt6ct
+			plasma-workspace
+			kde-cli-tools
+			qtstyleplugin-kvantum
+		}
+
 		libsForQt5.qt5ct
-		kdePackages.qt6ct
-		kdePackages.plasma-workspace
+		libsForQt5.qtstyleplugin-kvantum
+		
 		desktop-file-utils
   		xdg-utils
-		kdePackages.kde-cli-tools
 
 		inputs.freesmlauncher.packages.${pkgs.stdenv.hostPlatform.system}.default
 		inputs.snappy-switcher.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -46,10 +54,6 @@
 		      --size standard
 		  '';
 		}))
-
-		kdePackages.qtstyleplugin-kvantum
-		libsForQt5.qtstyleplugin-kvantum
-
 		inputs.compose2nix.packages.x86_64-linux.default
 	];
 

@@ -47,4 +47,6 @@
 		capSysAdmin = true; # only needed for Wayland -- omit this when using with Xorg
 		openFirewall = true;
 	};
+
+	services.desktopManager.plasma6.enable = true;
 }

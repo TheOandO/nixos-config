@@ -14,7 +14,7 @@
         	enable = true;
         };
         autoLogin = {
-            enable = true;
+            enable = false;
             user = "matty";
         };
      };
