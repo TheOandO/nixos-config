@@ -45,6 +45,7 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+		qylock.url = "github:Darkkal44/qylock";
 		dolphin-overlay.url = "github:rumboon/dolphin-overlay";
 	};
 
@@ -59,6 +60,7 @@
 		snappy-switcher,
 		caelestia-shell,
 		hyprmod,
+		qylock,
 		...
 	} @ inputs:
 		{
@@ -119,6 +121,14 @@
 				        ./modules/hosts/desktop/networking.nix
 				        ./modules/hosts/desktop/security.nix
 				        ./modules/hosts/desktop/system.nix
+
+						qylock.nixosModules.default
+						({ pkgs, ... }: {
+							programs.qylock = {
+								enable = true;
+								theme = "sword";          #
+							};
+						})
 
 
 					    home-manager.nixosModules.home-manager
