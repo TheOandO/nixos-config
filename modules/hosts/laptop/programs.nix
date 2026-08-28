@@ -4,20 +4,22 @@
  	# List packages installed in system profile. To search, run:
   	# $ nix search wget
   	environment.systemPackages = with pkgs; [
-    	gnome-text-editor
-    	nautilus
+	    	gnome-text-editor
+	    	nautilus
 		vscodium
 		gparted
 		adwaita-qt
 		gnome-themes-extra
 		gsettings-desktop-schemas
+		gnome-keyring
 		glib
 		gedit
+		polkit_gnome
 		
 		#Icon theme
 		papirus-icon-theme
 
-        inputs.caelestia-shell.packages.${pkgs.stdenv.hostPlatform.system}.with-cli
+        	inputs.caelestia-shell.packages.${pkgs.stdenv.hostPlatform.system}.with-cli
 	];
 
 	# Some programs need SUID wrappers, can be configured further or are

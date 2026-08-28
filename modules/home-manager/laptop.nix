@@ -4,21 +4,21 @@
 	
 	gtk = {
 		enable = true;
-		iconTheme = {
-			name = "Papirus-Dark";
-		    package = pkgs.papirus-icon-theme;
-		};
-  		gtk3 = {
-    		extraConfig = {
-      			gtk-application-prefer-dark-theme = 1;
-    		};
-  		};
-
-  		gtk4 = {
-   			extraConfig = {
-      			gtk-application-prefer-dark-theme = 1;
-    		};
-  		};
+# 		iconTheme = {
+# 			name = "Papirus-Dark";
+# 		    package = pkgs.papirus-icon-theme;
+# 		};
+#   		gtk3 = {
+#     		extraConfig = {
+#       			gtk-application-prefer-dark-theme = 1;
+#     		};
+#   		};
+# 
+#   		gtk4 = {
+#    			extraConfig = {
+#       			gtk-application-prefer-dark-theme = 1;
+#     		};
+#   		};
 	};
 
   	dconf = {
@@ -29,27 +29,20 @@
     	};
 	};
 
-	qt = {
-	    enable = true;
-		platformTheme.name = "Adwaita-dark";
-	    style = {
-	      	name = "Adwaita-dark";
-	      	package = pkgs.adwaita-qt;
-	    };
-	};
-	
+	# qt = {
+	#     enable = true;
+	# 	platformTheme.name = "Adwaita-dark";
+	#     style = {
+	#       	name = "Adwaita-dark";
+	#       	package = pkgs.adwaita-qt;
+	#     };
+	# };
+	# 
 	xdg.portal = {
 	    enable = true;
 	    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-	    configPackages = with pkgs; [ xdg-desktop-portal-gtk ];
+	    config.common.default = "gtk";
 	};
-
-	home.sessionVariables = {
-		GTK_THEME = "Adwaita";
-		GSETTINGS_SCHEMA_DIR = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas";
-	};
-
-
 
 
 	programs.fish.functions = {
