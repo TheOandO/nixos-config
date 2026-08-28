@@ -1,20 +1,29 @@
 { config, pkgs, ... }:
 {
-  	home.username = "matty";
-  	home.homeDirectory = "/home/matty";
-  	home.stateVersion = "24.11";
+	imports = [
+		./modules/fish/fish-functions.nix
+	];
 
-    home.pointerCursor = {
-    	enable = true;
-        gtk.enable = true;
-        x11.enable = true;
-        package = pkgs.bibata-cursors;
-        name = "Bibata-Modern-Classic";
-        size = 18;
-    };
+  	home = {
+		username = "matty";
+		homeDirectory = "/home/matty";
+		stateVersion = "24.11";
+		pointerCursor = {
+			enable = true;
+			gtk.enable = true;
+			x11.enable = true;
+			package = pkgs.bibata-cursors;
+			name = "Bibata-Modern-Classic";
+			size = 18;
+		};
+  	};
 
-	xdg.userDirs.enable = true;
-	xdg.userDirs.setSessionVariables = false;
+	xdg = {
+		userDirs = {
+			enable = true;
+			setSessionVariables = false;
+		};
+	};
 
 	dconf = {
 		enable = true;
@@ -26,7 +35,6 @@
 	};
 
   	programs.git = {
-  	  	enable = true;
 	  	settings = {
 	    	user.name = "matty";
 	    	user.email = "realkripper@email.com";
@@ -35,8 +43,6 @@
   	};
 
   	programs.fish = {
-  	  	enable = true;
-
 		interactiveShellInit = ''
  	    	fastfetch
  	    	set fish_greeting ""
