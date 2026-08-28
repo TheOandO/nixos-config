@@ -6,6 +6,7 @@
 
 	xdg.mimeApps = {
 		enable = true;
+		force = true;
 		defaultApplications = {
     		# Directories
     		"inode/directory" = "org.kde.dolphin.desktop";

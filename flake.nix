@@ -72,7 +72,7 @@
 	} @ inputs:
 		{
 			nixosConfigurations = {
-		    	laptop = nixpkgs.lib.nixosSystem {
+		    	matty-laptop = nixpkgs.lib.nixosSystem {
 			    	system = "x86_64-linux";
 			      	specialArgs = { inherit inputs; };
 			      	modules = [
@@ -116,7 +116,7 @@
 			      	];
 			    };
 		
-			    desktop = nixpkgs.lib.nixosSystem {
+			    matty-desktop = nixpkgs.lib.nixosSystem {
 					system = "x86_64-linux";
 				    specialArgs = { inherit inputs; };
 				    modules = [
