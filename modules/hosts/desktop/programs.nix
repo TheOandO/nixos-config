@@ -60,6 +60,7 @@
 		      --size standard
 		  '';
 		}))
+		(import inputs.creamlinux-installer { inherit pkgs; })
 		inputs.compose2nix.packages.x86_64-linux.default
 	];
 

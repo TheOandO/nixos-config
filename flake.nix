@@ -45,6 +45,13 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+		creamlinux-installer = {
+		      type = "github";
+		      owner = "Novattz";
+		      repo = "creamlinux-installer";
+		      flake = false;
+		};
+
 		qylock.url = "github:Darkkal44/qylock";
 		dolphin-overlay.url = "github:rumboon/dolphin-overlay";
 	};
