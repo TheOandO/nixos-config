@@ -42,10 +42,4 @@
 	  	};
   	};
 
-  	programs.fish = {
-		interactiveShellInit = ''
- 	    	fastfetch
- 	    	set fish_greeting ""
-		'';
-  	};
 }

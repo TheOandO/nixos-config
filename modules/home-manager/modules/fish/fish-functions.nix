@@ -10,7 +10,7 @@
 			rebuild = ''
 				cd /etc/nixos
 
-				set host (hostname)
+				set host (hostname | sed 's/^matty-//')
 
 				echo "🔄 Updating flake inputs..."
 				sudo nix flake update
@@ -44,7 +44,7 @@
 			pull-nix = ''
 				cd /etc/nixos
 
-				set host (hostname)
+				set host (hostname | sed 's/^matty-//')
 
 				echo "📦 Staging local changes..."
 				sudo git add .
