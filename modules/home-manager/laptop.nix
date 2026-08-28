@@ -4,15 +4,16 @@
 	
 	gtk = {
 		enable = true;
-# 		iconTheme = {
-# 			name = "Papirus-Dark";
-# 		    package = pkgs.papirus-icon-theme;
-# 		};
-#   		gtk3 = {
-#     		extraConfig = {
-#       			gtk-application-prefer-dark-theme = 1;
-#     		};
-#   		};
+		iconTheme = {
+			name = "Papirus-Dark";
+		    package = pkgs.papirus-icon-theme;
+		};
+  		gtk3 = {
+    		extraConfig = {
+      			gtk-application-prefer-dark-theme = 1;
+      			gtk-theme-name = "adw-gtk3-dark";
+    		};
+  		};
 # 
 #   		gtk4 = {
 #    			extraConfig = {
@@ -29,19 +30,37 @@
     	};
 	};
 
-	# qt = {
-	#     enable = true;
-	# 	platformTheme.name = "Adwaita-dark";
-	#     style = {
-	#       	name = "Adwaita-dark";
-	#       	package = pkgs.adwaita-qt;
-	#     };
-	# };
-	# 
+	qt = {
+	    enable = true;
+		platformTheme.name = "Adwaita-dark";
+	    style = {
+	      	name = "Adwaita-dark";
+	      	package = pkgs.adwaita-qt;
+	    };
+	};
+	
 	xdg.portal = {
 	    enable = true;
 	    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
 	    config.common.default = "gtk";
+	};
+
+	systemd.user.services.polkit-gnome-authentication-agent-1 = {
+	  	Unit = {
+	    	Description = "polkit-gnome-authentication-agent-1";
+	    	Wants = [ "graphical-session.target" ];
+	    	After = [ "graphical-session.target" ];
+	  	};
+	  	Install = {
+	    	WantedBy = [ "graphical-session.target" ];
+	  	};
+	  	Service = {
+	    	Type = "simple";
+	    	ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+	    	Restart = "on-failure";
+	    	RestartSec = 1;
+	    	TimeoutStopSec = 10;
+	  	};
 	};
 
 
@@ -57,9 +76,10 @@
 
 			read -P "Commit message (leave empty for default): " msg
 			if test -z "$msg"
-				set msg "update: "(date +%Y-%m-%d)
+				set msg "[Laptop Update]: "(date +%Y-%m-%d)
 			end
-
+			set msg "[Laptop] $msg"
+			
 			echo "💾 Committing changes..."
 			sudo git commit -m "$msg"; or true
 
@@ -111,7 +131,7 @@
             sudo git stash pop; or echo "ℹ️  Nothing to restore from stash."
                   
             echo "🔨 Rebuilding NixOS..."
-            sudo nixos-rebuild switch --flake /etc/nixos#desktop
+            sudo nixos-rebuild switch --flake /etc/nixos#laptop
                   
             echo "✅ Done!"
         '';

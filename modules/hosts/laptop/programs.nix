@@ -4,11 +4,12 @@
  	# List packages installed in system profile. To search, run:
   	# $ nix search wget
   	environment.systemPackages = with pkgs; [
-	    	gnome-text-editor
-	    	nautilus
+	    gnome-text-editor
+	   	nautilus
 		vscodium
 		gparted
 		adwaita-qt
+		adw-gtk3
 		gnome-themes-extra
 		gsettings-desktop-schemas
 		gnome-keyring

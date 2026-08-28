@@ -5,11 +5,11 @@
   	# $ nix search wget
   	environment.systemPackages = with pkgs; [
   		#  vim # Do not forget to add an editor to edit configuration.nix! The Nano edito>
-	    	wget
-	    	btop
-	    	xwayland-satellite
-	    	fastfetch
-	    	kitty
+	    wget
+	    btop
+	    xwayland-satellite
+	    fastfetch
+	    kitty
 	   	micro
 		gtk4
 		git
@@ -28,16 +28,16 @@
 		gparted
 		qbittorrent
 
-	    	inputs.hyprmod.packages.${pkgs.stdenv.hostPlatform.system}.default
+	    inputs.hyprmod.packages.${pkgs.stdenv.hostPlatform.system}.default
 		inputs.snappy-switcher.packages.${pkgs.stdenv.hostPlatform.system}.default
 					
 		# Fish shell plugins
-	    	fishPlugins.tide
-	    	fishPlugins.done
-	    	fishPlugins.fzf-fish
-	    	fzf
-	    	fishPlugins.grc
-	    	grc
+	    fishPlugins.tide
+	    fishPlugins.done
+	    fishPlugins.fzf-fish
+	    fzf
+	    fishPlugins.grc
+	    grc
 
 		lsfg-vk
 		lsfg-vk-ui
