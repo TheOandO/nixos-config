@@ -6,10 +6,12 @@ My personal NixOS configuration using flakes and home-manager, supporting multip
 
 ```
 /etc/nixos/
-├── flake.nix              # Flake inputs and system definitions (all hosts)
+├── flake.nix              # Flake inputs and outputs (delegates host definitions to flake/hosts.nix)
 ├── flake.lock             # Pinned input versions
 ├── configuration.nix      # Shared base config, imports common modules
 ├── setup.sh               # Automated setup script for new machines
+├── flake/
+│   └── hosts.nix          # nixosConfigurations definitions for all hosts (laptop, desktop)
 └── modules/
     ├── common/
     │   ├── programs.nix       # Shared system packages and programs
@@ -20,12 +22,13 @@ My personal NixOS configuration using flakes and home-manager, supporting multip
     │   └── boot.nix           # Bootloader config
     ├── home-manager/
     │   ├── common.nix         # Shared home manager config
+    │   ├── fish-functions.nix # Shared, hostname-aware fish functions (rebuild, pull-nix, pull-dot)
     │   ├── laptop.nix         # Laptop-specific home config
     │   └── desktop.nix        # Desktop-specific home config
     └── hosts/
         ├── laptop/
         │   ├── hardware.nix       # Laptop hardware config (auto-generated)
-        │   ├── programs.nix       # Laptop-specific packages (Niri, Noctalia, Nautilus)
+        │   ├── programs.nix       # Laptop-specific packages (Hyprland, Nautilus)
         │   ├── services.nix       # Laptop-specific services
         │   ├── networking.nix     # Laptop-specific networking config
         │   ├── security.nix       # Laptop-specific security config
@@ -45,7 +48,7 @@ My personal NixOS configuration using flakes and home-manager, supporting multip
 
 | Host | Desktop | File Manager | Notes |
 |------|---------|--------------|-------|
-| `laptop` | Niri (Wayland) + Noctalia | Nautilus | Primary mobile machine |
+| `laptop` | Hyprland (Wayland) | Nautilus | Primary mobile machine |
 | `desktop` | Hyprland + Noctalia | Dolphin | Main workstation |
 
 ## Installing on a New Machine
@@ -93,4 +96,11 @@ After making changes to any config file, run:
 rebuild
 ```
 
-This prompts for a commit message (defaults to today's date if left empty), commits, pushes to GitHub, updates flake inputs, and rebuilds the system in one command.
+This prompts for a commit message (defaults to today's date if left empty, tagged with the current host), commits, pushes to GitHub, updates flake inputs, then asks whether to run `nixos-rebuild switch` and, if so, whether to reboot, power off, or do nothing afterward.
+
+To pull down changes made on another machine instead of pushing local ones:
+
+```bash
+pull-nix   # syncs /etc/nixos, shows the latest remote commit, rebases local changes on top, then optionally rebuilds and reboots/powers off
+pull-dot   # same sync flow for ~/.config dotfiles, no rebuild step
+```

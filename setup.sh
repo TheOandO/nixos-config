@@ -10,6 +10,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 REPO_URL="https://github.com/TheOandO/nixos-config.git"
+DOTFILES_REPO_URL="https://github.com/TheOandO/nixos-dot-files.git"
 NIXOS_DIR="/etc/nixos"
 HARDWARE_CONFIG="/tmp/hardware-configuration.nix"
 
@@ -120,11 +121,36 @@ log "Running nixos-rebuild for $HOST..."
 nixos-rebuild switch --flake "$NIXOS_DIR#$HOST" || error "nixos-rebuild failed. Check the error output above."
 success "NixOS rebuilt successfully for $HOST."
 
+# ─── Step 13: Set up dotfiles repo ────────────────────────────────────────────
+echo ""
+log "Setting up dotfiles for $HOST..."
+
+REAL_USER="${SUDO_USER:-$USER}"
+USER_HOME=$(getent passwd "$REAL_USER" | cut -d: -f6)
+DOTFILES_DIR="$USER_HOME/.config"
+
+if [ -d "$DOTFILES_DIR/.git" ]; then
+    warn "$DOTFILES_DIR is already a git repo, skipping dotfiles clone. Run 'pull-dot' manually to sync."
+else
+    if [ -d "$DOTFILES_DIR" ] && [ "$(ls -A "$DOTFILES_DIR" 2>/dev/null)" ]; then
+        BACKUP_DIR="$USER_HOME/.config-backup-$(date +%Y%m%d%H%M%S)"
+        warn "$DOTFILES_DIR already has content, backing it up to $BACKUP_DIR first."
+        mv "$DOTFILES_DIR" "$BACKUP_DIR"
+    fi
+
+    log "Cloning dotfiles repo into $DOTFILES_DIR (branch: $HOST)..."
+    git clone --branch "$HOST" "$DOTFILES_REPO_URL" "$DOTFILES_DIR" || error "Failed to clone dotfiles repo. Check the branch '$HOST' exists on $DOTFILES_REPO_URL."
+    chown -R "$REAL_USER":"$REAL_USER" "$DOTFILES_DIR"
+    success "Dotfiles cloned to $DOTFILES_DIR on branch '$HOST'."
+fi
+
 # ─── Done ─────────────────────────────────────────────────────────────────────
 echo ""
 echo -e "${GREEN}════════════════════════════════════════${NC}"
 echo -e "${GREEN}  Setup complete for: $HOST          ${NC}"
 echo -e "${GREEN}════════════════════════════════════════${NC}"
+echo ""
+echo -e "Dotfiles cloned to $DOTFILES_DIR on branch '$HOST' (run 'pull-dot' any time to resync)."
 echo ""
 echo -e "${YELLOW}Next step 1 — Set up SSH key for GitHub pushes:${NC}"
 echo ""
@@ -135,26 +161,14 @@ echo "  Then add the key to: https://github.com/settings/ssh/new"
 echo "  And test with: ssh -T git@github.com"
 echo ""
 
-echo -e "${YELLOW}Next step 2 — Add sync-repos.sh to your compositor startup:${NC}"
+echo -e "${YELLOW}Next step 2 — Add sync-repos.sh to your Hyprland startup:${NC}"
 echo ""
-
-if [ "$HOST" = "laptop" ]; then
-    echo "  You are on the laptop (Niri). Add this to your niri config:"
-    echo ""
-    echo '  spawn-at-startup "kitty" "--" "bash" "-c" "sudo /etc/nixos/sync-repos.sh; exec fish"'
-    echo ""
-    echo "  Or in home.nix:"
-    echo '  programs.niri.settings.spawn-at-startup = ['
-    echo '    { command = [ "kitty" "--" "bash" "-c" "sudo /etc/nixos/sync-repos.sh; exec fish" ]; }'
-    echo '  ];'
-else
-    echo "  You are on the desktop (Hyprland). Add this to your hyprland config:"
-    echo ""
-    echo "  exec-once = kitty -- bash -c 'sudo /etc/nixos/sync-repos.sh; exec fish'"
-    echo ""
-    echo "  Or in your Lua config:"
-    echo '  hl.on("hyprland.start", function()'
-    echo "      hl.exec_cmd(\"kitty -- bash -c 'sudo /etc/nixos/sync-repos.sh; exec fish'\")"
-    echo '  end)'
-fi
+echo "  Add this to your hyprland config:"
+echo ""
+echo "  exec-once = kitty -- bash -c 'sudo /etc/nixos/sync-repos.sh; exec fish'"
+echo ""
+echo "  Or in your Lua config:"
+echo '  hl.on("hyprland.start", function()'
+echo "      hl.exec_cmd(\"kitty -- bash -c 'sudo /etc/nixos/sync-repos.sh; exec fish'\")"
+echo '  end)'
 echo ""
