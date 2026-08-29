@@ -34,12 +34,7 @@
 			url = "github:OpalAayan/snappy-switcher";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
-
-		caelestia-shell = {
-		    url = "github:caelestia-dots/shell";
-		    inputs.nixpkgs.follows = "nixpkgs";
-		};
-
+		
 		hyprmod = {
 			url = "github:BlueManCZ/hyprmod";
 			inputs.nixpkgs.follows = "nixpkgs";
@@ -65,7 +60,6 @@
 		freesmlauncher,
 		compose2nix,
 		snappy-switcher,
-		caelestia-shell,
 		hyprmod,
 		qylock,
 		...
