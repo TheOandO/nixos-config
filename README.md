@@ -49,7 +49,7 @@ My personal NixOS configuration using flakes and home-manager, supporting multip
 | Host | Desktop | File Manager | Notes |
 |------|---------|--------------|-------|
 | `laptop` | Hyprland (Wayland) | Nautilus | Primary mobile machine |
-| `desktop` | Hyprland + Noctalia | Dolphin | Main workstation |
+| `desktop` | Hyprland + Noctalia/KDE Plasma | Dolphin | Main workstation |
 
 ## Installing on a New Machine
 
@@ -96,11 +96,11 @@ After making changes to any config file, run:
 rebuild
 ```
 
-This prompts for a commit message (defaults to today's date if left empty, tagged with the current host), commits, pushes to GitHub, updates flake inputs, then asks whether to run `nixos-rebuild switch` and, if so, whether to reboot, power off, or do nothing afterward.
+This prompts for a commit message (defaults to today's date if left empty, tagged with the current host), commits, pushes to GitHub, updates flake inputs, then asks whether to run `nixos-rebuild switch`.
 
 To pull down changes made on another machine instead of pushing local ones:
 
 ```bash
-pull-nix   # syncs /etc/nixos, shows the latest remote commit, rebases local changes on top, then optionally rebuilds and reboots/powers off
-pull-dot   # same sync flow for ~/.config dotfiles, no rebuild step
+pull-nix   # syncs /etc/nixos
+pull-dot   # same sync flow for ~/.config dotfiles
 ```
