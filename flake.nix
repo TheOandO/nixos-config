@@ -85,6 +85,14 @@
 				        ./modules/hosts/laptop/security.nix
 				        ./modules/hosts/laptop/system.nix
 
+						qylock.nixosModules.default
+						({ pkgs, ... }: {
+							programs.qylock = {
+								enable = true;
+								theme = "forest";          #
+							};
+						})
+
 						{
 						    nixpkgs.overlays = [
 						    	(final: prev: {
@@ -133,7 +141,7 @@
 						({ pkgs, ... }: {
 							programs.qylock = {
 								enable = true;
-								theme = "sword";          #
+								theme = "nothing";          #
 							};
 						})
 
