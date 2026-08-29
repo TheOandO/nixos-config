@@ -37,10 +37,27 @@
 				echo "⬆️  Force pushing to remote..."
 				sudo git push --force
 
-				echo "🔨 Rebuilding NixOS (with upgrades)..."
-				sudo nixos-rebuild switch --upgrade-all --flake .#$host
+				read -P "🔨 Run nixos-rebuild switch now? [Y/n] " do_rebuild
+				if test -z "$do_rebuild"; or test "$do_rebuild" = "y" -o "$do_rebuild" = "Y"
+					echo "🔨 Rebuilding NixOS (with upgrades)..."
+					sudo nixos-rebuild switch --upgrade-all --flake .#$host
 
-				echo "✅ Done!"
+					echo "✅ Done!"
+
+					read -P "Reboot, poweroff, or do nothing? [r/p/N] " post_action
+					switch "$post_action"
+						case r R
+							echo "🔁 Rebooting..."
+							sudo reboot
+						case p P
+							echo "⏻  Powering off..."
+							sudo poweroff
+						case '*'
+							echo "✅ Done!"
+					end
+				else
+					echo "⏭️  Skipping rebuild."
+				end
 			'';
 			pull-nix = ''
 				cd /etc/nixos
@@ -58,6 +75,9 @@
 
 				set branch (sudo git branch --show-current)
 				echo "🌿 Current branch: $branch"
+
+				echo "📝 Latest commit on origin/$branch:"
+				sudo git log origin/$branch -1 --oneline
 
 				set local_commit (sudo git rev-parse HEAD)
 				set remote_commit (sudo git rev-parse origin/$branch)
@@ -78,10 +98,27 @@
 				echo "📂 Restoring stashed changes..."
 				sudo git stash pop; or echo "ℹ️  Nothing to restore from stash."
 
-				echo "🔨 Rebuilding NixOS..."
-				sudo nixos-rebuild switch --flake /etc/nixos#$host
+				read -P "🔨 Run nixos-rebuild switch now? [Y/n] " do_rebuild
+				if test -z "$do_rebuild"; or test "$do_rebuild" = "y" -o "$do_rebuild" = "Y"
+					echo "🔨 Rebuilding NixOS..."
+					sudo nixos-rebuild switch --flake /etc/nixos#$host
 
-				echo "✅ Done!"
+					echo "✅ Done!"
+
+					read -P "Reboot, poweroff, or do nothing? [r/p/N] " post_action
+					switch "$post_action"
+						case r R
+							echo "🔁 Rebooting..."
+							sudo reboot
+						case p P
+							echo "⏻  Powering off..."
+							sudo poweroff
+						case '*'
+							echo "👍 Skipping reboot/poweroff."
+					end
+				else
+					echo "⏭️  Skipping rebuild."
+				end
 			'';
 			pull-dot = ''
 				cd ~/.config
@@ -96,6 +133,9 @@
 
 				set branch (sudo git branch --show-current)
 				echo "🌿 Current branch: $branch"
+
+				echo "📝 Latest commit on origin/$branch:"
+				sudo git log origin/$branch -1 --oneline
 
 				set local_commit (sudo git rev-parse HEAD)
 				set remote_commit (sudo git rev-parse origin/$branch)
