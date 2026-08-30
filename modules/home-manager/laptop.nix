@@ -48,4 +48,10 @@
 	  	};
 	};
 
+	programs = {
+		noctalia = {
+			settings = "~/.config/noctalia/noctalia-config.toml";
+		};	
+	};
+
 }
