@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
 	imports = [
-		./modules/fish/fish-functions.nix
+		./modules
 	];
 
   	home = {
@@ -33,13 +33,4 @@
 		    };
 		};
 	};
-
-  	programs.git = {
-	  	settings = {
-	    	user.name = "matty";
-	    	user.email = "realkripper@email.com";
-	    	init.defaultBranch = "main";
-	  	};
-  	};
-
 }

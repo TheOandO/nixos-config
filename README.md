@@ -4,8 +4,10 @@ My personal NixOS configuration using flakes and home-manager, supporting multip
 
 ## Structure
 
+> **Note:** `/etc/nixos` is a symlink to `~/NIXOS`. On a fresh install, `setup.sh` clones this repo directly into `~/NIXOS` (user-owned) and symlinks `/etc/nixos` to it — so day-to-day editing and git operations never require `sudo`. Only `nixos-rebuild switch` (and `reboot`/`poweroff`) still need it.
+
 ```
-/etc/nixos/
+/etc/nixos/  ->  ~/NIXOS/
 ├── flake.nix              # Flake inputs and outputs (delegates host definitions to flake/hosts.nix)
 ├── flake.lock             # Pinned input versions
 ├── configuration.nix      # Shared base config, imports common modules
@@ -28,7 +30,7 @@ My personal NixOS configuration using flakes and home-manager, supporting multip
     └── hosts/
         ├── laptop/
         │   ├── hardware.nix       # Laptop hardware config (auto-generated)
-        │   ├── programs.nix       # Laptop-specific packages (Hyprland, Nautilus)
+        │   ├── programs.nix       # Laptop-specific packages (Niri, Noctalia)
         │   ├── services.nix       # Laptop-specific services
         │   ├── networking.nix     # Laptop-specific networking config
         │   ├── security.nix       # Laptop-specific security config
@@ -48,18 +50,18 @@ My personal NixOS configuration using flakes and home-manager, supporting multip
 
 | Host | Desktop | File Manager | Notes |
 |------|---------|--------------|-------|
-| `laptop` | Hyprland (Wayland) | Nautilus | Primary mobile machine |
+| `laptop` | Niri (Wayland) + Noctalia | Nautilus | Primary laptop |
 | `desktop` | Hyprland + Noctalia/KDE Plasma | Dolphin | Main workstation |
 
 ## Installing on a New Machine
 
 ### 1. Boot NixOS installer and install base system
 
-Follow the [NixOS installation guide](https://nixos.org/manual/nixos/stable/#sec-installation). During install, let NixOS generate a default `configuration.nix` — you will need the `hardware-configuration.nix` it produces.
+Follow the [NixOS installation guide](https://nixos.org/manual/nixos/stable/#sec-installation). During install, let NixOS generate a default `configuration.nix`, which you will need the `hardware-configuration.nix` it produces.
 
 ### 2. Run the setup script
 
-The setup script handles everything automatically — cloning the repo, copying hardware config, and rebuilding the system.
+The setup script handles everything automatically: cloning the repo, copying hardware config, and rebuilding the system.
 
 ```bash
 curl -o /tmp/setup.sh https://raw.githubusercontent.com/TheOandO/nixos-config/main/setup.sh
@@ -70,12 +72,16 @@ sudo bash /tmp/setup.sh
 The script will:
 1. Ask which host to set up (`laptop` or `desktop`)
 2. Ask for your git username and email
-3. Clear `/etc/nixos` and clone this repo
-4. Copy `hardware-configuration.nix` to the correct host folder
-5. Commit the hardware config locally
-6. Set the remote to SSH
-7. Update flake inputs
-8. Run `nixos-rebuild switch`
+3. Back up the installer-generated `hardware-configuration.nix`
+4. Remove the installer's `/etc/nixos` and clone this repo into `~/NIXOS` instead (owned by your user)
+5. Symlink `/etc/nixos` to `~/NIXOS`
+6. Copy `hardware-configuration.nix` to the correct host folder
+7. Commit the hardware config locally
+8. Set the remote to SSH
+9. Update flake inputs
+10. Run `nixos-rebuild switch`
+11. Fix ownership of `~/NIXOS` (root touched some files during setup — this is the last time `sudo` is needed for the repo)
+12. Clone the dotfiles repo (`nixos-dot-files`) into `~/.config`, checked out to the branch matching the host you picked
 
 ### 3. Set up SSH key for GitHub (for future pushes)
 
@@ -96,11 +102,11 @@ After making changes to any config file, run:
 rebuild
 ```
 
-This prompts for a commit message (defaults to today's date if left empty, tagged with the current host), commits, pushes to GitHub, updates flake inputs, then asks whether to run `nixos-rebuild switch`.
+This prompts for a commit message (defaults to today's date if left empty, tagged with the current host), commits, pushes to GitHub, and updates flake inputs — all as your normal user, no `sudo` needed since `/etc/nixos` is a symlink to your user-owned `~/NIXOS`. It then asks whether to run `nixos-rebuild switch` (the one step that does need `sudo`), and if you rebuild, whether to reboot, power off, or do nothing afterward.
 
 To pull down changes made on another machine instead of pushing local ones:
 
 ```bash
-pull-nix   # syncs /etc/nixos
-pull-dot   # same sync flow for ~/.config dotfiles
+pull-nix   # syncs /etc/nixos, shows the latest remote commit, rebases local changes on top, then optionally rebuilds and reboots/powers off
+pull-dot   # same sync flow for ~/.config dotfiles, no rebuild step
 ```

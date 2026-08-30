@@ -40,9 +40,13 @@ case "$host_choice" in
 esac
 success "Host set to: $HOST"
 
-# ─── Step 3: Git identity ─────────────────────────────────────────────────────
+# ─── Step 3: Git identity ──────────────────────────────────────────────────────
+# Two uses: (1) baked directly into git.nix so home-manager's declarative
+# programs.git.settings has your real identity from the first rebuild onward,
+# and (2) a repo-local .git/config identity for this script's own commit in
+# step 9, which happens before that rebuild has applied anything.
 echo ""
-log "Setting up git identity for root..."
+log "Git identity..."
 read -rp "Git username: " git_username
 read -rp "Git email: " git_email
 
@@ -50,10 +54,9 @@ if [ -z "$git_username" ] || [ -z "$git_email" ]; then
     error "Git username and email cannot be empty."
 fi
 
-git config --global user.name "$git_username"
-git config --global user.email "$git_email"
-git config --global init.defaultBranch "main"
-success "Git identity set: $git_username <$git_email>"
+REAL_USER="${SUDO_USER:-$USER}"
+USER_HOME=$(getent passwd "$REAL_USER" | cut -d: -f6)
+REPO_DIR="$USER_HOME/NIXOS"
 
 # ─── Step 4: Backup hardware config ───────────────────────────────────────────
 echo ""
@@ -64,17 +67,48 @@ fi
 cp "$NIXOS_DIR/hardware-configuration.nix" "$HARDWARE_CONFIG"
 success "Hardware config backed up to $HARDWARE_CONFIG"
 
-# ─── Step 5: Clear /etc/nixos ─────────────────────────────────────────────────
+# ─── Step 5a: Remove installer's /etc/nixos, clone repo into ~/NIXOS ──────────
 echo ""
-log "Clearing $NIXOS_DIR..."
-rm -rf "${NIXOS_DIR:?}"/*
-success "$NIXOS_DIR cleared."
+log "Removing installer-generated $NIXOS_DIR..."
+rm -rf "${NIXOS_DIR:?}"
+success "$NIXOS_DIR removed."
 
-# ─── Step 6: Clone repo ───────────────────────────────────────────────────────
 echo ""
-log "Cloning repo into $NIXOS_DIR..."
-git clone "$REPO_URL" "$NIXOS_DIR" || error "Failed to clone repo. Check your internet connection and repo URL."
-success "Repo cloned successfully."
+log "Cloning repo into $REPO_DIR..."
+git clone "$REPO_URL" "$REPO_DIR" || error "Failed to clone repo. Check your internet connection and repo URL."
+chown -R "$REAL_USER":"$REAL_USER" "$REPO_DIR"
+success "Repo cloned to $REPO_DIR (owned by $REAL_USER)."
+
+# ─── Step 5b: Bake git identity into the home-manager git.nix module ─────────
+echo ""
+log "Setting user.name/user.email in git.nix..."
+GIT_NIX="$REPO_DIR/modules/home-manager/modules/git.nix"
+
+if [ ! -f "$GIT_NIX" ]; then
+    error "git.nix not found at $GIT_NIX. Check the path matches your repo layout."
+fi
+
+# Escape / and & so they can't break the sed replacement.
+esc_name=$(printf '%s' "$git_username" | sed -e 's/[\/&]/\\&/g')
+esc_email=$(printf '%s' "$git_email" | sed -e 's/[\/&]/\\&/g')
+
+sed -i "s/user\.name = \"[^\"]*\";/user.name = \"$esc_name\";/" "$GIT_NIX"
+sed -i "s/user\.email = \"[^\"]*\";/user.email = \"$esc_email\";/" "$GIT_NIX"
+success "git.nix updated with $git_username <$git_email>."
+
+# Repo-local identity so root's one-time hardware-config commit below works
+# without needing root's own gitconfig — local config lives in .git/config,
+# independent of whichever user's $HOME is running the command. Matches the
+# values just baked into git.nix so the commit author is consistent with
+# what home-manager will apply after the rebuild.
+git -C "$REPO_DIR" config user.name "$git_username"
+git -C "$REPO_DIR" config user.email "$git_email"
+
+# ─── Step 6: Symlink /etc/nixos to ~/NIXOS ────────────────────────────────────
+echo ""
+log "Symlinking $NIXOS_DIR -> $REPO_DIR..."
+ln -s "$REPO_DIR" "$NIXOS_DIR"
+success "$NIXOS_DIR now points to $REPO_DIR."
 
 # ─── Step 7: Make scripts executable ─────────────────────────────────────────
 echo ""
@@ -95,13 +129,13 @@ fi
 cp "$HARDWARE_CONFIG" "$TARGET_DIR/hardware.nix"
 success "Hardware config copied to $TARGET_DIR/hardware.nix"
 
-# ─── Step 9: Git add and commit hardware config ────────────────────────────────
+# ─── Step 9: Git add and commit hardware config + git identity ────────────────
 echo ""
-log "Committing hardware config..."
+log "Committing hardware config and git identity..."
 cd "$NIXOS_DIR"
-git add "modules/hosts/$HOST/hardware.nix" || error "Failed to git add hardware config."
-git commit -m "add: $HOST hardware config" || error "Failed to commit hardware config."
-success "Hardware config committed."
+git add "modules/hosts/$HOST/hardware.nix" "modules/home-manager/modules/git.nix" || error "Failed to git add changes."
+git commit -m "add: $HOST hardware config, set git identity" || error "Failed to commit changes."
+success "Hardware config and git identity committed."
 
 # ─── Step 10: Set remote to SSH ───────────────────────────────────────────────
 echo ""
@@ -121,12 +155,16 @@ log "Running nixos-rebuild for $HOST..."
 nixos-rebuild switch --flake "$NIXOS_DIR#$HOST" || error "nixos-rebuild failed. Check the error output above."
 success "NixOS rebuilt successfully for $HOST."
 
+# ─── Step 12b: Fix ownership after root-run git/nix operations ───────────────
+echo ""
+log "Restoring ownership of $REPO_DIR to $REAL_USER (root touched files during setup)..."
+chown -R "$REAL_USER":"$REAL_USER" "$REPO_DIR"
+success "$REPO_DIR is owned by $REAL_USER — no sudo needed for future git/nix commands."
+
 # ─── Step 13: Set up dotfiles repo ────────────────────────────────────────────
 echo ""
 log "Setting up dotfiles for $HOST..."
 
-REAL_USER="${SUDO_USER:-$USER}"
-USER_HOME=$(getent passwd "$REAL_USER" | cut -d: -f6)
 DOTFILES_DIR="$USER_HOME/.config"
 
 if [ -d "$DOTFILES_DIR/.git" ]; then
@@ -150,6 +188,7 @@ echo -e "${GREEN}═════════════════════
 echo -e "${GREEN}  Setup complete for: $HOST          ${NC}"
 echo -e "${GREEN}════════════════════════════════════════${NC}"
 echo ""
+echo -e "Config repo: $REPO_DIR (symlinked from /etc/nixos, owned by $REAL_USER)."
 echo -e "Dotfiles cloned to $DOTFILES_DIR on branch '$HOST' (run 'pull-dot' any time to resync)."
 echo ""
 echo -e "${YELLOW}Next step 1 — Set up SSH key for GitHub pushes:${NC}"
@@ -161,14 +200,26 @@ echo "  Then add the key to: https://github.com/settings/ssh/new"
 echo "  And test with: ssh -T git@github.com"
 echo ""
 
-echo -e "${YELLOW}Next step 2 — Add sync-repos.sh to your Hyprland startup:${NC}"
+echo -e "${YELLOW}Next step 2 — Add sync-repos.sh to your compositor startup:${NC}"
 echo ""
-echo "  Add this to your hyprland config:"
-echo ""
-echo "  exec-once = kitty -- bash -c 'sudo /etc/nixos/sync-repos.sh; exec fish'"
-echo ""
-echo "  Or in your Lua config:"
-echo '  hl.on("hyprland.start", function()'
-echo "      hl.exec_cmd(\"kitty -- bash -c 'sudo /etc/nixos/sync-repos.sh; exec fish'\")"
-echo '  end)'
+
+if [ "$HOST" = "laptop" ]; then
+    echo "  You are on the laptop (Niri). Add this to your niri config:"
+    echo ""
+    echo '  spawn-at-startup "kitty" "--" "bash" "-c" "sudo /etc/nixos/sync-repos.sh; exec fish"'
+    echo ""
+    echo "  Or in home.nix:"
+    echo '  programs.niri.settings.spawn-at-startup = ['
+    echo '    { command = [ "kitty" "--" "bash" "-c" "sudo /etc/nixos/sync-repos.sh; exec fish" ]; }'
+    echo '  ];'
+else
+    echo "  You are on the desktop (Hyprland). Add this to your hyprland config:"
+    echo ""
+    echo "  exec-once = kitty -- bash -c 'sudo /etc/nixos/sync-repos.sh; exec fish'"
+    echo ""
+    echo "  Or in your Lua config:"
+    echo '  hl.on("hyprland.start", function()'
+    echo "      hl.exec_cmd(\"kitty -- bash -c 'sudo /etc/nixos/sync-repos.sh; exec fish'\")"
+    echo '  end)'
+fi
 echo ""
