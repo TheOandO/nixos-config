@@ -17,7 +17,7 @@
 			({ pkgs, ... }: {
 				programs.qylock = {
 					enable = true;
-					theme = "forest";          #
+					theme = "sword";          #
 				};
 			})
 
@@ -69,7 +69,7 @@
 			({ pkgs, ... }: {
 				programs.qylock = {
 					enable = true;
-					theme = "nothing";          #
+					theme = "pixel-dusk-city";
 				};
 			})
 
