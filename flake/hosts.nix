@@ -21,22 +21,6 @@
 				};
 			})
 
-			{
-			    nixpkgs.overlays = [
-			    	(final: prev: {
-			    		snappy-switcher = prev.snappy-switcher.overrideAttrs (old: {
-			    	    	postInstall = builtins.replaceStrings
-			    	        	[ ''substituteInPlace snappy-switcher.service \
-			    	            	--replace-fail "/usr/local" "$out"'' ]
-			    	       		[ ''substituteInPlace snappy-switcher.service \
-			    	            	--replace-fail "/usr/bin/snappy-switcher" "$out/bin/snappy-switcher"'' ]
-			    	        	old.postInstall;
-			    	    });
-			    	  })
-			    ];							
-			}
-
-
 			home-manager.nixosModules.home-manager
 			{
 				  home-manager.useGlobalPkgs = true;
@@ -45,7 +29,7 @@
 				  home-manager.users.matty = {
 					    imports = [
 							../modules/home-manager/common.nix
-							../modules/home-manager/laptop.nix
+							../modules/home-manager/laptop/laptop.nix
 					    ];
 				  };
 			}
@@ -82,7 +66,7 @@
 				home-manager.users.matty = {
 					imports = [
 						../modules/home-manager/common.nix
-						../modules/home-manager/desktop.nix
+						../modules/home-manager/desktop/desktop.nix
 				    ];
 			    };
 		    }

@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 {
+	imports = [
+		./modules
+	];
 	# xdg.configFile."niri/config.kdl".source = ./config.kdl;
 	gtk = {
 		enable = true;

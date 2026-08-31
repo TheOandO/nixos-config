@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 {
+	imports = [
+		./modules
+	];
 	qt = {
 		enable = true;
 	};
