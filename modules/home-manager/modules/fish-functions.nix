@@ -109,10 +109,10 @@
 					switch "$post_action"
 						case r R
 							echo "🔁 Rebooting..."
-							sudo reboot
+							reboot
 						case p P
 							echo "⏻  Powering off..."
-							sudo poweroff
+							poweroff
 						case '*'
 							echo "👍 Skipping reboot/poweroff."
 					end
