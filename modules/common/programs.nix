@@ -17,7 +17,9 @@
 		glib
 		sbctl
 		nwg-look
-			
+		kdePackages.kdeconnect-kde
+
+
 		pear-desktop
 		inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
 		inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default

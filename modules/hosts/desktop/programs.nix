@@ -23,7 +23,6 @@
 		kdePackages.krdp
 		kdePackages.kimageformats # provides Qt plugins
 		kdePackages.qtimageformats # provides optional image formats such as .webp and .avif
-		kdePackages.kdeconnect-kde
 		kdePackages.kdeplasma-addons
 		kdePackages.kfilemetadata
 		kdePackages.qt6ct
