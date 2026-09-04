@@ -30,7 +30,8 @@
 		kdePackages.plasma-desktop
 		kdePackages.kde-cli-tools
 		kdePackages.qtstyleplugin-kvantum
-
+		kdePackages.kdegraphics-thumbnailers
+		
 		libsForQt5.qt5ct
 		libsForQt5.qtstyleplugin-kvantum
 
