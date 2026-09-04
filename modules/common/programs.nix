@@ -17,8 +17,6 @@
 		glib
 		sbctl
 		nwg-look
-		kdePackages.kdeconnect-kde
-
 
 		pear-desktop
 		inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -58,6 +56,7 @@
     		enableSSHSupport = true;
 		};
 
+		kdeconnect.enable = true;
 		fish.enable = true;
 		firefox.enable = true;
 
