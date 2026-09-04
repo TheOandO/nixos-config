@@ -14,7 +14,7 @@
 				set host (hostname | sed 's/^matty-//')
 
 				echo "🔄 Updating flake inputs..."
-				sudo nix flake update
+				nix flake update
 
 				echo "📦 Staging local changes..."
 				git add .
