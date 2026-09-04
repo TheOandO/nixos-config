@@ -33,8 +33,6 @@
 		    };
 		};
 	};
-
-	home-manager.users.username.services.kdeconnect.enable = true;
 	
 	networking.firewall = rec {
 	  	allowedTCPPortRanges = [ { from = 1714; to = 1764; } ];
