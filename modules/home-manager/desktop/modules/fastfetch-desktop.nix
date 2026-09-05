@@ -1,6 +1,5 @@
 { config, pkgs, ... }:
 {
-	# Inspired by Catnap (https://github.com/iinsertNameHere/catnap)
 	programs.fastfetch = {
 		enable = true;
 
@@ -8,86 +7,156 @@
 			"$schema" = "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json";
 
 			logo = {
-				type = "small";
 				padding = {
-					top = 1;
+					top = 2;
 				};
 			};
 
 			display = {
-				separator = " ";
+				separator = " -> ";
+				constants = [
+					"──────────────────────────────"
+				];
 			};
 
 			modules = [
 				{
-					key = "╭───────────╮";
 					type = "custom";
+					format = "┌{$1}{$1}┐";
+					outputColor = "90";
 				}
 				{
-					key = "│ {#31} user    {#keys}│";
 					type = "title";
-					format = "{user-name}";
+					keyWidth = 10;
 				}
 				{
-					key = "│ {#32}󰇅 hname   {#keys}│";
-					type = "title";
-					format = "{host-name}";
+					type = "custom";
+					format = "└{$1}{$1}┘";
+					outputColor = "90";
 				}
 				{
-					key = "│ {#33}󰅐 uptime  {#keys}│";
-					type = "uptime";
+					type = "custom";
+					format = " {#90}  {#31}  {#32}  {#33}  {#34}  {#35}  {#36}  {#37}  {#38}  {#39}       {#38}  {#37}  {#36}  {#35}  {#34}  {#33}  {#32}  {#31}  {#90}";
 				}
 				{
-					key = "│ {#34}{icon} distro  {#keys}│";
+					type = "custom";
+					format = "┌{$1}{$1}┐";
+					outputColor = "90";
+				}
+				{
 					type = "os";
+					key = "{icon} OS";
+					keyColor = "yellow";
 				}
 				{
-					key = "│ {#35} kernel  {#keys}│";
 					type = "kernel";
+					key = "│ ├{icon}";
+					keyColor = "yellow";
 				}
 				{
-					key = "│ {#36}󰇄 desktop {#keys}│";
-					type = "de";
+					type = "packages";
+					key = "│ ├{icon}";
+					keyColor = "yellow";
 				}
 				{
-					key = "│ {#31} term    {#keys}│";
-					type = "terminal";
-				}
-				{
-					key = "│ {#32} shell   {#keys}│";
 					type = "shell";
+					key = "│ └";
+					keyColor = "yellow";
 				}
 				{
-					key = "│ {#33}󰍛 cpu     {#keys}│";
+					type = "wm";
+					key = " DE/WM";
+					keyColor = "blue";
+				}
+				{
+					type = "lm";
+					key = "│ ├{icon}";
+					keyColor = "blue";
+				}
+				{
+					type = "wmtheme";
+					key = "│ ├{icon}";
+					keyColor = "blue";
+				}
+				{
+					type = "icons";
+					key = "│ ├{icon}";
+					keyColor = "blue";
+				}
+				{
+					type = "terminal";
+					key = "│ ├{icon}";
+					keyColor = "blue";
+				}
+				{
+					type = "wallpaper";
+					key = "│ └󰸉";
+					keyColor = "blue";
+				}
+				{
+					type = "host";
+					key = "󰌢 PC";
+					keyColor = "green";
+				}
+				{
 					type = "cpu";
-					showPeCoreCount = true;
+					key = "│ ├{icon}";
+					keyColor = "green";
 				}
 				{
-					key = "│ {#34}󰉉 disk    {#keys}│";
+					type = "gpu";
+					key = "│ ├{icon}";
+					keyColor = "green";
+				}
+				{
 					type = "disk";
-					folders = "/";
+					key = "│ ├{icon}";
+					keyColor = "green";
 				}
 				{
-					key = "│ {#35} memory  {#keys}│";
 					type = "memory";
+					key = "│ ├{icon}";
+					keyColor = "green";
 				}
 				{
-					key = "│ {#36}󰩟 network {#keys}│";
-					type = "localip";
-					format = "{ipv4} ({ifname})";
+					type = "swap";
+					key = "│ ├{icon}";
+					keyColor = "green";
 				}
 				{
-					key = "├───────────┤";
+					type = "uptime";
+					key = "│ ├{icon}";
+					keyColor = "green";
+				}
+				{
+					type = "display";
+					key = "│ └󰍹";
+					keyColor = "green";
+				}
+				{
+					type = "sound";
+					key = " SND";
+					keyColor = "cyan";
+				}
+				{
+					type = "player";
+					key = "│ ├{icon}";
+					keyColor = "cyan";
+				}
+				{
+					type = "media";
+					key = "│ └󰝚";
+					keyColor = "cyan";
+				}
+				{
 					type = "custom";
+					format = "└{$1}{$1}┘";
+					outputColor = "90";
 				}
+				"break"
 				{
-					key = "│ {#39} colors  {#keys}│";
-					type = "colors";
-					symbol = "circle";
-				}
-				{
-					key = "╰───────────╯";
 					type = "custom";
+					format = " {#90}  {#31}  {#32}  {#33}  {#34}  {#35}  {#36}  {#37}  {#38}  {#39}       {#38}  {#37}  {#36}  {#35}  {#34}  {#33}  {#32}  {#31}  {#90}";
 				}
 			];
 		};
