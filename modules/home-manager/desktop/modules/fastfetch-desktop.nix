@@ -74,11 +74,6 @@
 					keyColor = "blue";
 				}
 				{
-					type = "wmtheme";
-					key = "│ ├{icon}";
-					keyColor = "blue";
-				}
-				{
 					type = "icons";
 					key = "│ ├{icon}";
 					keyColor = "blue";
@@ -86,11 +81,6 @@
 				{
 					type = "terminal";
 					key = "│ ├{icon}";
-					keyColor = "blue";
-				}
-				{
-					type = "wallpaper";
-					key = "│ └󰸉";
 					keyColor = "blue";
 				}
 				{
@@ -119,11 +109,6 @@
 					keyColor = "green";
 				}
 				{
-					type = "swap";
-					key = "│ ├{icon}";
-					keyColor = "green";
-				}
-				{
 					type = "uptime";
 					key = "│ ├{icon}";
 					keyColor = "green";
@@ -136,11 +121,6 @@
 				{
 					type = "sound";
 					key = " SND";
-					keyColor = "cyan";
-				}
-				{
-					type = "player";
-					key = "│ ├{icon}";
 					keyColor = "cyan";
 				}
 				{
