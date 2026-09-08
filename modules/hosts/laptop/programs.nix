@@ -5,6 +5,7 @@
   	# $ nix search wget
   	environment.systemPackages = with pkgs; [
 	    gnome-text-editor
+	    eog
 	   	nautilus
 		vscodium
 		gparted
