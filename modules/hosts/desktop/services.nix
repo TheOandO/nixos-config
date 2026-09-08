@@ -22,19 +22,26 @@
 	services = {
 		pipewire = {
 			enable = true;
-			wireplumber.enable = true;
-			wireplumber.extraConfig = {
-				"10-disable-suspend" = {
-				    "monitor.alsa.rules" = [
-				    {
-				    	matches = [ { "node.name" = "~alsa_output.*"; } ];
-				        actions = {
-				        	"update-props" = {
-				            	"session.suspend-timeout-seconds" = -1;
-				            };
-				        };
-				    }];
-			    };
+			wireplumber = {
+				enable = true;
+				extraConfig = {
+					"10-disable-suspend" = {
+						"monitor.alsa.rules" = [
+						{
+							matches = [ { "node.name" = "~alsa_output.*"; } ];
+							actions = {
+								"update-props" = {
+									"session.suspend-timeout-seconds" = 0;
+								};
+							};
+						}];
+					};
+					"51-disable-suspend" = {
+						"wireplumber.settings" = {
+							"node.suspend-timeout-seconds" = 0;
+						};
+					};
+				};
 			};
 		};
 
