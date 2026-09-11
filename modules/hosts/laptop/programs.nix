@@ -17,10 +17,11 @@
 		glib
 		gedit
 		polkit_gnome
+		zoom-us
 		
 		#Icon theme
 		papirus-icon-theme
-
+		
 	];
 
 	# Some programs need SUID wrappers, can be configured further or are
