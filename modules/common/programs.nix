@@ -28,6 +28,7 @@
 		gparted
 		qbittorrent
 		jellyfin-desktop
+		obs-studio
 
 	    inputs.hyprmod.packages.${pkgs.stdenv.hostPlatform.system}.default
 		inputs.snappy-switcher.packages.${pkgs.stdenv.hostPlatform.system}.default
