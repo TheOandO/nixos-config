@@ -28,7 +28,6 @@
 		gparted
 		qbittorrent
 		jellyfin-desktop
-		obs-studio
 
 	    inputs.hyprmod.packages.${pkgs.stdenv.hostPlatform.system}.default
 		inputs.snappy-switcher.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -62,6 +61,19 @@
 		kdeconnect.enable = true;
 		fish.enable = true;
 		firefox.enable = true;
+
+		obs-studio = {
+			enable = true;
+
+			plugins = with pkgs.obs-studio-plugins; [
+				wlrobs
+				obs-backgroundremoval
+				obs-pipewire-audio-capture
+				obs-vaapi #optional AMD hardware acceleration
+				obs-gstreamer
+				obs-vkcapture
+			];
+		};
 
 		dconf.profiles.user.databases = [
 		{
