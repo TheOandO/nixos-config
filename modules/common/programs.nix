@@ -29,6 +29,7 @@
 		qbittorrent
 		jellyfin-desktop
 
+		
 	    inputs.hyprmod.packages.${pkgs.stdenv.hostPlatform.system}.default
 		inputs.snappy-switcher.packages.${pkgs.stdenv.hostPlatform.system}.default
 					

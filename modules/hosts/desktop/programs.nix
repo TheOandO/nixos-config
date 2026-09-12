@@ -35,7 +35,7 @@
 		libsForQt5.qt5ct
 		libsForQt5.qtstyleplugin-kvantum
 
-		
+		ganttproject-bin
 		kurve
 		cava
 	  	(python3.withPackages (ps: with ps; [

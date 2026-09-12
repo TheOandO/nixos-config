@@ -18,6 +18,7 @@
 		gedit
 		polkit_gnome
 		zoom-us
+		planner
 		
 		#Icon theme
 		papirus-icon-theme
