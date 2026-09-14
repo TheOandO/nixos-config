@@ -23,7 +23,7 @@
   	users.users."matty" = {
     		isNormalUser = true;
     		description = "Matty";
-    		extraGroups = [ "networkmanager" "wheel" "samba" "gamemode" "uinput" ];
+    		extraGroups = [ "networkmanager" "wheel" "samba" "gamemode" "uinput" "libvirtd" ];
     		shell = pkgs.fish;
     		packages = with pkgs; [];
   	};

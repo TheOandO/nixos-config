@@ -8,10 +8,34 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot = {
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "ahci"
+      "nvme"
+      "usb_storage"
+      "usbhid"
+      "sd_mod"
+    ];
+
+    initrd.kernelModules = [
+      "vfio_pci"
+      "vfio"
+      "vfio_iommu_type1"
+
+      "nvidiafb"
+      "nouveau"
+      "nvidia_drm"
+      "nvidia"
+    ];
+
+    kernelParams = [
+      "intel_iommu=on"
+      "vfio-pci.ids=10de:1f08,10de:10f9"
+    ];
+    kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ ];
+  };
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/28dd4416-ef41-4fa1-81a2-d0dc27ec620b";
@@ -27,13 +51,26 @@
 	swapDevices = [ ];
 
 	nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-	hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-	hardware.graphics.enable = true;
-	hardware.graphics.enable32Bit = true;
-	hardware.bluetooth.enable = true;
+    nixpkgs.config.rocmSupport = true;
+#     nixpkgs.config.cudaSupport = true;
 
-	nixpkgs.config.rocmSupport = true;
-	hardware.amdgpu.opencl.enable = true;
-	hardware.amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
-	hardware.amdgpu.overdrive.enable = true;
+	hardware = {
+      cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+      bluetooth.enable = true;
+
+      graphics = {
+        enable = true;
+        enable32Bit = true;
+      };
+
+      amdgpu = {
+        opencl.enable = true;
+        initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
+        overdrive.enable = true;
+      };
+
+      nvidia = {
+        open = true;
+      };
+	};
 }

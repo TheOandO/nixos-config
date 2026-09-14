@@ -63,15 +63,40 @@
 		}))
 		(import inputs.creamlinux-installer { inherit pkgs; })
 		inputs.compose2nix.packages.x86_64-linux.default
+
+		#virtualisation
+		OVMF
+		qemu
+		dnsmasq
+		edk2
+		(writeShellScriptBin "qemu-system-x86_64-uefi" ''
+			qemu-system-x86_64 \
+			-bios ${pkgs.OVMF.fd}/FV/OVMF.fd \
+			"$@"
+		'')
 	];
 
 	programs = {
 		hyprland.enable = true;
+		virt-manager.enable = true;
 	};
-	virtualisation.docker = {
-		rootless = {
+	virtualisation = {
+		docker = {
+			rootless = {
+				enable = true;
+				setSocketVariable = true;
+			};
+		};
+
+		spiceUSBRedirection.enable = true;
+		libvirtd = {
 			enable = true;
-			setSocketVariable = true;
+			qemu = {
+				package = pkgs.qemu_kvm;
+				runAsRoot = true;
+				swtpm.enable = true;
+			};
+
 		};
 	};
 }

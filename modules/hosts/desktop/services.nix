@@ -45,6 +45,8 @@
 			};
 		};
 
+		xserver.videoDrivers = [ "nvidia" ];
+
 		lact.enable = true;
 
 		scx = {
