@@ -45,7 +45,7 @@
 			};
 		};
 
-		xserver.videoDrivers = [ "nvidia" ];
+# 		xserver.videoDrivers = [ "nvidia" ];
 
 		lact.enable = true;
 

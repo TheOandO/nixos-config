@@ -65,15 +65,17 @@
 		inputs.compose2nix.packages.x86_64-linux.default
 
 		#virtualisation
-		OVMF
-		qemu
-		dnsmasq
-		edk2
-		(writeShellScriptBin "qemu-system-x86_64-uefi" ''
-			qemu-system-x86_64 \
-			-bios ${pkgs.OVMF.fd}/FV/OVMF.fd \
-			"$@"
-		'')
+# 		OVMFFull
+# 		qemu
+# 		dnsmasq
+# 		edk2
+# 		(writeShellScriptBin "qemu-system-x86_64-uefi" ''
+# 			qemu-system-x86_64 \
+# 			-bios ${pkgs.OVMFFull.fd}/FV/OVMF.fd \
+# 			"$@"
+# 		'')
+# 		python313Packages.virt-firmware
+
 	];
 
 	programs = {
@@ -88,15 +90,15 @@
 			};
 		};
 
-		spiceUSBRedirection.enable = true;
-		libvirtd = {
-			enable = true;
-			qemu = {
-				package = pkgs.qemu_kvm;
-				runAsRoot = true;
-				swtpm.enable = true;
-			};
-
-		};
+# 		spiceUSBRedirection.enable = true;
+# 		libvirtd = {
+# 			enable = true;
+# 			qemu = {
+# 				package = pkgs.qemu_kvm;
+# 				runAsRoot = true;
+# 				swtpm.enable = true;
+# 			};
+#
+# 		};
 	};
 }

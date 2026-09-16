@@ -20,6 +20,12 @@
 				options = [ "nofail" ];
 			};
 
+		"/mnt/win" =
+			{ device = "/dev/disk/by-uuid/7183e0da-af4c-4f29-be0d-9b4ac9169a6e";
+				fsType = "ext4";
+				options = [ "nofail" ];
+			};
+
 		"/mnt/nas" = {
 				  device = "//mattyomv.local/NAS/";
 				  fsType = "cifs";

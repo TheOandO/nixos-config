@@ -23,18 +23,27 @@
       "vfio"
       "vfio_iommu_type1"
 
-      "nvidiafb"
-      "nouveau"
-      "nvidia_drm"
-      "nvidia"
+#       "nvidiafb"
+#       "nouveau"
+#       "nvidia_drm"
+#       "nvidia"
     ];
 
     kernelParams = [
       "intel_iommu=on"
-      "vfio-pci.ids=10de:1f08,10de:10f9"
+      "vfio-pci.ids=10de:1f08,10de:10f9,10de:1ada,10de:1adb"
     ];
     kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
+
+    blacklistedKernelModules = [
+      "nouveau"
+      "nvidia"
+      "nvidiafb"
+      "nvidia-drm"
+      "nvidia-uvm"
+      "nvidia-modeset"
+    ];
   };
 
   fileSystems."/" =
@@ -70,7 +79,7 @@
       };
 
       nvidia = {
-        open = true;
+        open = false;
       };
 	};
 }
