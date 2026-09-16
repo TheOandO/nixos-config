@@ -4,7 +4,7 @@ My personal NixOS configuration using flakes and home-manager, supporting multip
 
 ## Structure
 
-> **Note:** `/etc/nixos` is a symlink to `~/NIXOS`. On a fresh install, `setup.sh` clones this repo directly into `~/NIXOS` (user-owned) and symlinks `/etc/nixos` to it — so day-to-day editing and git operations never require `sudo`. Only `nixos-rebuild switch` (and `reboot`/`poweroff`) still need it.
+> **Note:** `/etc/nixos` is a symlink to `~/NIXOS`. On a fresh install, `setup.sh` clones this repo directly into `~/NIXOS` (user-owned) and symlinks `/etc/nixos` to it — so day-to-day editing and git operations never require `sudo`.
 
 ```
 /etc/nixos/  ->  ~/NIXOS/
