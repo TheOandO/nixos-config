@@ -17,9 +17,9 @@
   	# Allow unfree packages
   	nixpkgs.config.allowUnfree = true;
 
-    nixpkgs.config.permittedInsecurePackages = [
-    	"electron-40.10.5"
-    ];
+              nixpkgs.config.permittedInsecurePackages = [
+                "ventoy-1.1.17"
+              ];
 
 	nix.settings.experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
 

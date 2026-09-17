@@ -29,7 +29,8 @@
 		qbittorrent
 		jellyfin-desktop
 		planner
-		
+		lufus
+
 	    inputs.hyprmod.packages.${pkgs.stdenv.hostPlatform.system}.default
 		inputs.snappy-switcher.packages.${pkgs.stdenv.hostPlatform.system}.default
 					
