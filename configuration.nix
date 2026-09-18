@@ -16,8 +16,10 @@
 
   	# Allow unfree packages
   	nixpkgs.config.allowUnfree = true;
+
   	nix.optimise.automatic = true;
-	# nix.settings.auto-optimise-store = true;
+	nix.settings.auto-optimise-store = true;
+	
 	nix.settings.experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
 
   	# This value determines the NixOS release from which the default

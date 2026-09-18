@@ -18,7 +18,8 @@
 		gedit
 		polkit_gnome
 		zoom-us
-		
+
+
 		#Icon theme
 		papirus-icon-theme
 		
