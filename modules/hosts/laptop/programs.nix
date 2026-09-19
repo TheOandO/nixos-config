@@ -19,7 +19,11 @@
 		polkit_gnome
 		zoom-us
 
+<<<<<<< Updated upstream
 
+=======
+		ventoy
+>>>>>>> Stashed changes
 		#Icon theme
 		papirus-icon-theme
 		
