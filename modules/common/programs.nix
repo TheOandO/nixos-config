@@ -30,6 +30,9 @@
 		jellyfin-desktop
 		planner
 		lufus
+		audacity
+		gptfdisk
+		woeusb
 
 	    inputs.hyprmod.packages.${pkgs.stdenv.hostPlatform.system}.default
 		inputs.snappy-switcher.packages.${pkgs.stdenv.hostPlatform.system}.default
