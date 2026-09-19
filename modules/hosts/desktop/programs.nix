@@ -46,7 +46,6 @@
   		xdg-utils
 
 		inputs.freesmlauncher.packages.${pkgs.stdenv.hostPlatform.system}.default
-		inputs.snappy-switcher.packages.${pkgs.stdenv.hostPlatform.system}.default
 
 		clinfo
 		(fluent-icon-theme.override {
@@ -80,7 +79,7 @@
 
 	programs = {
 		hyprland.enable = true;
-		virt-manager.enable = true;
+# 		virt-manager.enable = true;
 	};
 	virtualisation = {
 		docker = {

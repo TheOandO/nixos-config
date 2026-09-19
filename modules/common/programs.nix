@@ -11,12 +11,10 @@
 	    fastfetch
 	    kitty
 	   	micro
-		gtk4
 		git
 		wev
 		glib
 		sbctl
-		nwg-look
 
 		pear-desktop
 		inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -29,12 +27,11 @@
 		qbittorrent
 		jellyfin-desktop
 		planner
-		lufus
 		audacity
 		gptfdisk
 		woeusb
+		kdePackages.filelight
 
-	    inputs.hyprmod.packages.${pkgs.stdenv.hostPlatform.system}.default
 		inputs.snappy-switcher.packages.${pkgs.stdenv.hostPlatform.system}.default
 					
 		# Fish shell plugins
@@ -80,12 +77,12 @@
 			];
 		};
 
-		dconf.profiles.user.databases = [
-		{
-			settings."org/gnome/desktop/interface" = {
-				color-scheme = "prefer-dark";
-			};
-		}];
+# 		dconf.profiles.user.databases = [
+# 		{
+# 			settings."org/gnome/desktop/interface" = {
+# 				color-scheme = "prefer-dark";
+# 			};
+# 		}];
 
 		steam = {
 			enable = true; # Master switch, already covered in in>
