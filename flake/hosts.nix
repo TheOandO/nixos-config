@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, qylock, hermes-agent, sops-nix, ... } @ inputs:
+{ nixpkgs, home-manager, qylock, hermes-agent, ... } @ inputs:
 {
 	laptop = nixpkgs.lib.nixosSystem {
 		system = "x86_64-linux";
@@ -53,7 +53,6 @@
 
 			#LLMs
 	        hermes-agent.nixosModules.default
-			sops-nix.nixosModules.sops
 
 			#SDDM wallpapers
 			qylock.nixosModules.default
