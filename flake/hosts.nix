@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, qylock, ... } @ inputs:
+{ nixpkgs, home-manager, qylock, hermes-agent, sops-nix, ... } @ inputs:
 {
 	laptop = nixpkgs.lib.nixosSystem {
 		system = "x86_64-linux";
@@ -13,6 +13,7 @@
 			../modules/hosts/laptop/security.nix
 			../modules/hosts/laptop/system.nix
 
+			#SDDM wallpapers
 			qylock.nixosModules.default
 			({ pkgs, ... }: {
 				programs.qylock = {
@@ -21,6 +22,7 @@
 				};
 			})
 
+			#Home-manager
 			home-manager.nixosModules.home-manager
 			{
 				  home-manager.useGlobalPkgs = true;
@@ -49,6 +51,11 @@
 	        ../modules/hosts/desktop/security.nix
 	        ../modules/hosts/desktop/system.nix
 
+			#LLMs
+	        hermes-agent.nixosModules.default
+			sops-nix.nixosModules.sops
+
+			#SDDM wallpapers
 			qylock.nixosModules.default
 			({ pkgs, ... }: {
 				programs.qylock = {
@@ -57,7 +64,7 @@
 				};
 			})
 
-
+			#Home-manager
 		    home-manager.nixosModules.home-manager
 		    {
 				home-manager.useGlobalPkgs = true;

@@ -47,6 +47,12 @@
 		      flake = false;
 		};
 
+		sops-nix = {
+			url = "github:Mic92/sops-nix";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
+		hermes-agent.url = "github:NousResearch/hermes-agent";
 		qylock.url = "github:Darkkal44/qylock";
 		dolphin-overlay.url = "github:rumboon/dolphin-overlay";
 	};
@@ -62,6 +68,8 @@
 		snappy-switcher,
 		hyprmod,
 		qylock,
+		hermes-agent,
+		sops-nix,
 		...
 	} @ inputs:
 		{

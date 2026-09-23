@@ -62,5 +62,19 @@
 		};
 
 		desktopManager.plasma6.enable = true;
+
+		#LLM
+		hermes-agent = {
+			enable = true;
+			environmentFiles = [ config.sops.secrets."hermes-env".path ];
+			addToSystemPackages = true;
+		};
+
+	};
+
+	sops = {
+		defaultSopsFile = ./secrets/hermes.yaml;
+		age.keyFile = "/home/user/.config/sops/age/keys.txt";
+		secrets."hermes-env" = { format = "yaml"; };
 	};
 }
