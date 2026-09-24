@@ -64,11 +64,13 @@
 		desktopManager.plasma6.enable = true;
 
 		#LLM
-		hermes-agent = {
-			enable = true;
-			environmentFiles = [ "./secrets/hermes" ];
-			addToSystemPackages = true;
-		};
+# 		hermes-agent = {
+# 			enable = true;
+# 			gateway.enable = true;
+# 			backend.mode = "dashboard"; # + the browser dashboard on 127.0.0.1:9119
+# 			backend.port = 9119;
+# 			addToSystemPackages = true;
+# 		};
 
 	};
 
