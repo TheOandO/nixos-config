@@ -1,7 +1,6 @@
 { nixpkgs, home-manager, qylock, hermes-agent, ... } @ inputs:
 {
 	laptop = nixpkgs.lib.nixosSystem {
-		system = "x86_64-linux";
 		specialArgs = { inherit inputs; };
 		modules = [
 			../configuration.nix
@@ -39,7 +38,6 @@
 	};
 
 	desktop = nixpkgs.lib.nixosSystem {
-		system = "x86_64-linux";
 	    specialArgs = { inherit inputs; };
 	    modules = [
 			../configuration.nix

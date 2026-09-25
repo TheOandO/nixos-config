@@ -176,11 +176,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1790334897,
-        "narHash": "sha256-vG+mD9KYhyCIT4n8S0GrL68iX8NCXEtJ9L+/RUF8Pf4=",
+        "lastModified": 1790355082,
+        "narHash": "sha256-3+EkGodecF8031dfBYgQXGQ0AbtvicEqoqZkiNnwT+k=",
         "owner": "NousResearch",
         "repo": "hermes-agent",
-        "rev": "59004a62356f3a4697ab0fe8ad5086d2b405e2a6",
+        "rev": "28545254ddd02eaf01107a9ddf83b3ee9ae127f8",
         "type": "github"
       },
       "original": {

@@ -47,13 +47,12 @@
 		      flake = false;
 		};
 
-
 		hermes-agent.url = "github:NousResearch/hermes-agent";
 		qylock.url = "github:Darkkal44/qylock";
 		dolphin-overlay.url = "github:rumboon/dolphin-overlay";
 	};
 
-	outputs = { 
+	outputs = {
 		self,
 		nixpkgs,
 		noctalia,
@@ -67,7 +66,11 @@
 		hermes-agent,
 		...
 	} @ inputs:
+		let
+			system = "x86_64-linux";
+			pkgs = import nixpkgs { inherit system; };
+		in
 		{
-			nixosConfigurations = import ./flake/hosts.nix inputs;
+			nixosConfigurations = import ./flake/hosts.nix (inputs // { inherit self; });
 		};
 }
