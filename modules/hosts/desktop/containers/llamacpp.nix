@@ -12,7 +12,7 @@
 
   # Containers
   virtualisation.oci-containers.containers."llamacpp" = {
-    image = "ghcr.io/ggml-org/llama.cpp:server-vulkan";
+    image = "ghcr.io/anbeeld/beellama.cpp:server-vulkan";
     environment = {
       "LLAMA_ARG_MODELS_DIR" = "/models";
       "LLAMA_ARG_MODELS_PRESET" = "/models/presets.ini";
