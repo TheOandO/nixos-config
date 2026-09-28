@@ -15,7 +15,9 @@
 		wev
 		glib
 		sbctl
-
+		vlc
+		libvlc
+		
 		pear-desktop
 		inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
 		inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default

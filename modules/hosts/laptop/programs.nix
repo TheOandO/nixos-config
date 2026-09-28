@@ -24,6 +24,9 @@
 		
 	];
 
+	nixpkgs.config.packageOverrides = pkgs: {
+		intel-vaapi-driver = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
+	};
 	# Some programs need SUID wrappers, can be configured further or are
   	# started in user sessions.
 
