@@ -26,6 +26,7 @@
     		extraGroups = [ "networkmanager" "wheel" "samba" "gamemode" "uinput" "libvirtd" ];
     		shell = pkgs.fish;
     		packages = with pkgs; [];
+    		linger = true;
   	};
 
   	fonts = {

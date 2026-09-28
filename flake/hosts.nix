@@ -24,15 +24,18 @@
 			#Home-manager
 			home-manager.nixosModules.home-manager
 			{
-				  home-manager.useGlobalPkgs = true;
-				  home-manager.useUserPackages = true;
-				  home-manager.backupFileExtension = "backup";
-				  home-manager.users.matty = {
+				home-manager = {
+					useGlobalPkgs = true;
+					useUserPackages = true;
+					backupFileExtension = "backup";
+					extraSpecialArgs = { inherit inputs; };
+					users.matty = {
 					    imports = [
 							../modules/home-manager/common.nix
 							../modules/home-manager/laptop/laptop.nix
-					    ];
-				  };
+						];
+					};
+				};
 			}
 		];
 	};
@@ -50,7 +53,7 @@
 	        ../modules/hosts/desktop/system.nix
 
 			#LLMs
-	        hermes-agent.nixosModules.default
+# 	        hermes-agent.nixosModules.default
 
 			#SDDM wallpapers
 			qylock.nixosModules.default
@@ -64,15 +67,18 @@
 			#Home-manager
 		    home-manager.nixosModules.home-manager
 		    {
-				home-manager.useGlobalPkgs = true;
-				home-manager.useUserPackages = true;
-				home-manager.backupFileExtension = "backup";
-				home-manager.users.matty = {
-					imports = [
-						../modules/home-manager/common.nix
-						../modules/home-manager/desktop/desktop.nix
-				    ];
-			    };
+				home-manager = {
+					useGlobalPkgs = true;
+					useUserPackages = true;
+					backupFileExtension = "backup";
+					extraSpecialArgs = { inherit inputs; };
+					users.matty = {
+					    imports = [
+							../modules/home-manager/common.nix
+							../modules/home-manager/desktop/desktop.nix
+						];
+					};
+				};
 		    }
 	   ];
 	};

@@ -17,10 +17,17 @@
   	# Allow unfree packages
   	nixpkgs.config.allowUnfree = true;
 
-  	nix.optimise.automatic = true;
-	nix.settings.auto-optimise-store = true;
-
-	nix.settings.experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
+  	nix = {
+		optimise.automatic = true;
+		settings = {
+			auto-optimise-store = true;
+			experimental-features = [
+				"nix-command"
+				"flakes"
+				"pipe-operators"
+			];
+		};
+  	};
 
   	# This value determines the NixOS release from which the default
   	# settings for stateful data, like file locations and database versions
