@@ -57,7 +57,7 @@ in
 	        ../modules/hosts/desktop/system.nix
 
 			#LLMs
-# 	        hermes-agent.nixosModules.default
+	        hermes-agent.nixosModules.default
 
 			#SDDM wallpapers
 			qylock.nixosModules.default
