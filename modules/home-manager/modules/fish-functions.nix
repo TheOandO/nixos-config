@@ -44,12 +44,22 @@
 
 					echo "✅ Done!"
 
-					read -P "Reboot, poweroff, or do nothing? [r/p/N] " post_action
+					read -P "🗑️  Collect garbage now? [Y/n] " do_gc
+					if test -z "$do_gc"; or test "$do_gc" = "y" -o "$do_gc" = "Y"
+						echo "🗑️  Collecting garbage..."
+						sudo nix-collect-garbage -d
+					end
+
+					echo "What would you like to do next?"
+					echo "  1) Do nothing"
+					echo "  2) Reboot"
+					echo "  3) Poweroff"
+					read -P "Enter choice [1-3, default 1]: " post_action
 					switch "$post_action"
-						case r R
+						case 2
 							echo "🔁 Rebooting..."
 							reboot
-						case p P
+						case 3
 							echo "⏻  Powering off..."
 							poweroff
 						case '*'
@@ -105,12 +115,22 @@
 
 					echo "✅ Done!"
 
-					read -P "Reboot, poweroff, or do nothing? [r/p/N] " post_action
+					read -P "🗑️  Collect garbage now? [Y/n] " do_gc
+					if test -z "$do_gc"; or test "$do_gc" = "y" -o "$do_gc" = "Y"
+						echo "🗑️  Collecting garbage..."
+						sudo nix-collect-garbage -d
+					end
+
+					echo "What would you like to do next?"
+					echo "  1) Do nothing"
+					echo "  2) Reboot"
+					echo "  3) Poweroff"
+					read -P "Enter choice [1-3, default 1]: " post_action
 					switch "$post_action"
-						case r R
+						case 2
 							echo "🔁 Rebooting..."
 							reboot
-						case p P
+						case 3
 							echo "⏻  Powering off..."
 							poweroff
 						case '*'
