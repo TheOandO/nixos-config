@@ -1,4 +1,8 @@
 { nixpkgs, home-manager, qylock, hermes-agent, ... } @ inputs:
+let
+	system = "x86_64-linux";
+	pkgs = import nixpkgs { inherit system; };
+in
 {
 	laptop = nixpkgs.lib.nixosSystem {
 		specialArgs = { inherit inputs; };

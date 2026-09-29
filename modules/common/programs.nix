@@ -34,8 +34,7 @@
 		woeusb
 		kdePackages.filelight
 
-		inputs.snappy-switcher.packages.${pkgs.stdenv.hostPlatform.system}.default
-					
+
 		# Fish shell plugins
 	    fishPlugins.tide
 	    fishPlugins.done

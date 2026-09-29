@@ -30,11 +30,6 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-		snappy-switcher = {
-			url = "github:OpalAayan/snappy-switcher";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
-		
 		hyprmod = {
 			url = "github:BlueManCZ/hyprmod";
 			inputs.nixpkgs.follows = "nixpkgs";
@@ -60,16 +55,11 @@
 		dolphin-overlay,
 		freesmlauncher,
 		compose2nix,
-		snappy-switcher,
 		hyprmod,
 		qylock,
 		hermes-agent,
 		...
 	} @ inputs:
-		let
-			system = "x86_64-linux";
-			pkgs = import nixpkgs { inherit system; };
-		in
 		{
 			nixosConfigurations = import ./flake/hosts.nix (inputs // { inherit self; });
 		};
