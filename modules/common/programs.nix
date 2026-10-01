@@ -47,7 +47,7 @@
 		lsfg-vk-ui
 		heroic
 		protonplus
-		goverlay
+		# goverlay
 		mangohud    	
 	];
 
