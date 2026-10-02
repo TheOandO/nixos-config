@@ -19,6 +19,7 @@
 		polkit_gnome
 		zoom-us
 
+		appimage-run
 		#Icon theme
 		papirus-icon-theme
 		
