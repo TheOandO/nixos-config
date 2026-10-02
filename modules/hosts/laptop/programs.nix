@@ -18,8 +18,9 @@
 		gedit
 		polkit_gnome
 		zoom-us
-
+		moonlight-qt
 		appimage-run
+
 		#Icon theme
 		papirus-icon-theme
 		
@@ -35,6 +36,21 @@
 		niri.enable = true;
 		nautilus-open-any-terminal.enable = true;
 		dconf.enable = true;
+
+		appimage = {
+			enable = true;
+			binfmt = true;
+			package = pkgs.appimage-run.override
+			{
+				extraPkgs = pkgs:
+				[
+					pkgs.icu
+					pkgs.libxcrypt-legacy
+					pkgs.python312
+					pkgs.python312Packages.torch
+				];
+			};
+		};
 	};
 }
 
