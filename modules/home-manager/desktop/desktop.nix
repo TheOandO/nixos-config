@@ -47,6 +47,21 @@
 				"application/xml" = "org.kde.kate.desktop";
 				"text/xml" = "org.kde.kate.desktop";
 
+				# Archive formats -> Ark
+				"application/zip" = "org.kde.ark.desktop";
+				"application/rar" = "org.kde.ark.desktop";
+				"application/7z" = "org.kde.ark.desktop";
+				"application/tar" = "org.kde.ark.desktop";
+				"application/gzip" = "org.kde.ark.desktop";
+				"application/tgz" = "org.kde.ark.desktop";
+				"application/gz" = "org.kde.ark.desktop";
+				"application/bz2" = "org.kde.ark.desktop";
+				"application/xz" = "org.kde.ark.desktop";
+				"application/rpm" = "org.kde.ark.desktop";
+				"application/cab" = "org.kde.ark.desktop";
+				"application/deb" = "org.kde.ark.desktop";
+				"application/xar" = "org.kde.ark.desktop";
+
 				# Code formats -> Kate
 				"text/x-python" = "org.kde.kate.desktop";
 				"text/x-python3" = "org.kde.kate.desktop";
