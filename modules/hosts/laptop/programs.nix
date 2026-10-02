@@ -6,7 +6,7 @@
   	environment.systemPackages = with pkgs; [
 	    gnome-text-editor
 	    eog
-	   	nautilus
+		nautilus
 		vscodium
 		gparted
 		adwaita-qt
@@ -20,6 +20,7 @@
 		zoom-us
 		moonlight-qt
 		appimage-run
+		file-roller
 
 		#Icon theme
 		papirus-icon-theme
