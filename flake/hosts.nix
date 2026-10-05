@@ -16,6 +16,10 @@ in
 			../modules/hosts/laptop/security.nix
 			../modules/hosts/laptop/system.nix
 
+
+			#Secrets
+			inputs.sops-nix.nixosModules.sops
+
 			#SDDM wallpapers
 			qylock.nixosModules.default
 			({ pkgs, ... }: {
