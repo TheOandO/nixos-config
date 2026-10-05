@@ -5,7 +5,9 @@
         enableDefaultConfig = false;
 
         settings = {
-            addKeysToAgent = "yes";
+            * = {
+                addKeysToAgent = "yes";
+            };
         };
     };
 }
