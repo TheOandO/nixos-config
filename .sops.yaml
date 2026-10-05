@@ -1,10 +1,14 @@
 keys:
   - &matty-desktop age107dtl0ma6vjq7q97gel6eh9m2ntcz8vrwc95f79zuhth9c9qf35s8cluqa
-  # - &matty-laptop age1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  - &matty-laptop age12pt0atcprzz9chu6zqvv73ak8vwrq0eyaxgxvxpvndyp08wqcypsk7f2v3
 
 creation_rules:
-  - path_regex: secrets/.*\.yaml$
+  - path_regex: secrets/desktop.yaml$
     key_groups:
       - age:
           - *matty-desktop
-          # - *matty-laptop
+          
+  - path_regex: secrets/laptop.yaml$
+    key_groups:
+      - age:
+          - *matty-laptop
