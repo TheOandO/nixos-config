@@ -42,8 +42,12 @@
 		      flake = false;
 		};
 
-		hermes-agent.url = "github:NousResearch/hermes-agent";
-		qylock.url = "github:Darkkal44/qylock";
+		sops-nix = {
+			url = "github:Mic92/sops-nix";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
+ 		qylock.url = "github:Darkkal44/qylock";
 		dolphin-overlay.url = "github:rumboon/dolphin-overlay";
 	};
 
@@ -57,7 +61,6 @@
 		compose2nix,
 		hyprmod,
 		qylock,
-		hermes-agent,
 		...
 	} @ inputs:
 		{

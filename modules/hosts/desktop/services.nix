@@ -63,12 +63,6 @@
 
 		desktopManager.plasma6.enable = true;
 
-		#LLM
-		hermes-agent = {
-			enable = true;
-			addToSystemPackages = true;
-		};
-
 	};
 
 }

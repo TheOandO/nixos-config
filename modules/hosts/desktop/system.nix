@@ -27,7 +27,7 @@
 				    	# automount options: only mounts on first access, unmounts after idle
 				    	automount_opts = "x-systemd.automount,noauto";
 				  in [
-				    	"credentials=/etc/nixos/credentials/omv"
+				    	"credentials=${config.sops.templates."omv-credentials".path}"
 				    	"_netdev"
 				    	"uid=1000"
 				    	"gid=100"

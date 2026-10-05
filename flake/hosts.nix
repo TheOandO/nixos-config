@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, qylock, hermes-agent, ... } @ inputs:
+{ nixpkgs, home-manager, qylock, ... } @ inputs:
 let
 	system = "x86_64-linux";
 	pkgs = import nixpkgs { inherit system; };
@@ -56,8 +56,8 @@ in
 	        ../modules/hosts/desktop/security.nix
 	        ../modules/hosts/desktop/system.nix
 
-			#LLMs
-	        hermes-agent.nixosModules.default
+			#Secrets
+			inputs.sops-nix.nixosModules.sops
 
 			#SDDM wallpapers
 			qylock.nixosModules.default
