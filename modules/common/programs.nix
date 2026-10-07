@@ -61,6 +61,11 @@
     		enableSSHSupport = true;
 		};
 
+		direnv = {
+			enable = true;
+			nix-direnv.enable = true;
+		};
+
 		localsend.enable = true;
 		kdeconnect.enable = true;
 		fish.enable = true;
