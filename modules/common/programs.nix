@@ -19,6 +19,7 @@
 		libvlc
 		
 		pear-desktop
+		ungoogled-chromium
 		inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
 		inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
 		vesktop
@@ -48,7 +49,7 @@
 		lsfg-vk-ui
 		heroic
 		protonplus
-		# goverlay
+		goverlay
 		mangohud    	
 	];
 
