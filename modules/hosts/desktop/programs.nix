@@ -78,7 +78,11 @@
 	];
 
 	programs = {
-		hyprland.enable = true;
+		hyprland = {
+			enable = true;
+			xwayland.enable = true;
+			withUWSM = true;
+		};
 # 		virt-manager.enable = true;
 	};
 	virtualisation = {
