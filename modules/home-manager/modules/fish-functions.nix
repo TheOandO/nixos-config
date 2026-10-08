@@ -178,6 +178,12 @@
 
 				echo "✅ Done!"
 			'';
+
+			cleanup = ''
+				echo "🗑️ Collecting garbage..."
+				sudo nix-collect-garbage -d
+				echo "✅ Done!"
+			'';
 		};
 	};
 
