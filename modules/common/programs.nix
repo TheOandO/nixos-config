@@ -70,7 +70,7 @@
 		localsend.enable = true;
 		kdeconnect.enable = true;
 		fish.enable = true;
-		firefox.enable = true;
+# 		firefox.enable = true;
 
 		obs-studio = {
 			enable = true;
