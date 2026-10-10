@@ -8,8 +8,8 @@
 		age.keyFile = "/home/matty/.config/sops/age/keys.txt";
 
 		secrets = {
-			"omv/username" = { sopsFile = ../../../secrets/desktop.yaml; };
-			"omv/password" = { sopsFile = ../../../secrets/desktop.yaml; };
+			"omv/username" = { sopsFile = ../../../secrets/laptop.yaml; };
+			"omv/password" = { sopsFile = ../../../secrets/laptop.yaml; };
 		};
 		templates."omv-credentials".content = ''
 			username=${config.sops.placeholder."omv/username"}

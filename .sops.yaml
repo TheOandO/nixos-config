@@ -1,6 +1,6 @@
 keys:
   - &matty-desktop age107dtl0ma6vjq7q97gel6eh9m2ntcz8vrwc95f79zuhth9c9qf35s8cluqa
-  - &matty-laptop age12pt0atcprzz9chu6zqvv73ak8vwrq0eyaxgxvxpvndyp08wqcypsk7f2v3
+  - &matty-laptop age1kujh7rr0r8pxx3qnq2xpcj7nq90kpmjmlpst26337cj5rjhnk5wqaeagd9
 
 creation_rules:
   - path_regex: secrets/desktop.yaml$
