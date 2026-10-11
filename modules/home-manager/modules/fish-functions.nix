@@ -19,6 +19,13 @@
 				echo "📦 Staging local changes..."
 				git add .
 
+				echo "📝 Files to be committed:"
+				if git diff --cached --quiet
+					echo "   (no changes)"
+				else
+					git diff --cached --name-status
+				end
+
 				read -P "Commit message (leave empty for default): " msg
 				if test -z "$msg"
 					set msg "update: "(date +%Y-%m-%d)
@@ -31,11 +38,28 @@
 				echo "🔄 Fetching from remote..."
 				git fetch origin
 
-				echo "⚡ Rebasing with local changes taking priority..."
-				git rebase -X ours origin/(git branch --show-current); or true
+				set branch (git branch --show-current)
+				set behind (git rev-list --count HEAD..origin/$branch)
 
-				echo "⬆️  Force pushing to remote..."
-				git push --force
+				if test $behind -gt 0
+					echo "⬇️  Remote has $behind new commit(s), rebasing onto them..."
+					set old_head (git rev-parse HEAD)
+					if git rebase origin/$branch
+						echo "📄 Files changed by the pull:"
+						git diff --name-status $old_head HEAD
+					else
+						echo "❌ Rebase hit conflicts. Fix them, run 'git rebase --continue', then rerun rebuild."
+						return 1
+					end
+				end
+
+				set ahead (git rev-list --count origin/$branch..HEAD)
+				if test $ahead -gt 0
+					echo "⬆️  Pushing $ahead commit(s)..."
+					git push
+				else
+					echo "✅ Nothing to push."
+				end
 
 				read -P "🔨 Run nixos-rebuild switch now? [Y/n] " do_rebuild
 				if test -z "$do_rebuild"; or test "$do_rebuild" = "y" -o "$do_rebuild" = "Y"
@@ -74,12 +98,6 @@
 
 				set host (hostname | sed 's/^matty-//')
 
-				echo "📦 Staging local changes..."
-				git add .
-
-				echo "💾 Stashing local changes..."
-				git stash
-
 				echo "🔄 Fetching from remote..."
 				git fetch origin
 
@@ -89,24 +107,27 @@
 				echo "📝 Latest commit on origin/$branch:"
 				git log origin/$branch -1 --oneline
 
-				set local_commit (git rev-parse HEAD)
-				set remote_commit (git rev-parse origin/$branch)
-
-				if test "$local_commit" = "$remote_commit"
-					echo "✅ Already up to date, nothing to rebase."
-				else
-					echo "⚡ Local and remote differ, rebasing with local changes taking priority..."
-					set conflicts (git rebase -X ours origin/$branch 2>&1)
-					if test $status -eq 0
-						echo "✅ Rebase successful."
-					else
-						echo "⚠️  Rebase had conflicts, local changes were preferred:"
-						echo $conflicts
+				set remote_files (git diff --name-only HEAD...origin/$branch)
+				for f in (git diff --name-only HEAD)
+					if contains -- $f $remote_files
+						echo "⚠️  $f was edited locally and on the remote"
 					end
 				end
 
-				echo "📂 Restoring stashed changes..."
-				git stash pop; or echo "ℹ️  Nothing to restore from stash."
+				set old_head (git rev-parse HEAD)
+
+				echo "🔄 Pulling (your local edits are kept aside and restored)..."
+				if git pull --rebase --autostash origin $branch
+					if git diff --quiet $old_head HEAD
+						echo "📄 No file changes from the pull."
+					else
+						echo "📄 Files changed by the pull:"
+						git diff --name-status $old_head HEAD
+					end
+				else
+					echo "❌ Pull stopped (conflict). Your edits are still in 'git stash list'."
+					return 1
+				end
 
 				read -P "🔨 Run nixos-rebuild switch now? [Y/n] " do_rebuild
 				if test -z "$do_rebuild"; or test "$do_rebuild" = "y" -o "$do_rebuild" = "Y"
@@ -142,11 +163,6 @@
 			'';
 			pull-dot = ''
 				cd ~/.config
-				echo "📦 Staging local changes..."
-				git add .
-
-				echo "💾 Stashing local changes..."
-				git stash
 
 				echo "🔄 Fetching from remote..."
 				git fetch origin
@@ -157,24 +173,27 @@
 				echo "📝 Latest commit on origin/$branch:"
 				git log origin/$branch -1 --oneline
 
-				set local_commit (git rev-parse HEAD)
-				set remote_commit (git rev-parse origin/$branch)
-
-				if test "$local_commit" = "$remote_commit"
-					echo "✅ Already up to date, nothing to rebase."
-				else
-					echo "⚡ Local and remote differ, rebasing with local changes taking priority..."
-					set conflicts (git rebase -X ours origin/$branch 2>&1)
-					if test $status -eq 0
-						echo "✅ Rebase successful."
-					else
-						echo "⚠️  Rebase had conflicts, local changes were preferred:"
-						echo $conflicts
+				set remote_files (git diff --name-only HEAD...origin/$branch)
+				for f in (git diff --name-only HEAD)
+					if contains -- $f $remote_files
+						echo "⚠️  $f was edited locally and on the remote"
 					end
 				end
 
-				echo "📂 Restoring stashed changes..."
-				git stash pop; or echo "ℹ️  Nothing to restore from stash."
+				set old_head (git rev-parse HEAD)
+
+				echo "🔄 Pulling (your local edits are kept aside and restored)..."
+				if git pull --rebase --autostash origin $branch
+					if git diff --quiet $old_head HEAD
+						echo "📄 No file changes from the pull."
+					else
+						echo "📄 Files changed by the pull:"
+						git diff --name-status $old_head HEAD
+					end
+				else
+					echo "❌ Pull stopped (conflict). Your edits are still in 'git stash list'."
+					return 1
+				end
 
 				echo "✅ Done!"
 			'';
