@@ -24,11 +24,11 @@
     "creamlinux-installer": {
       "flake": false,
       "locked": {
-        "lastModified": 1783846734,
-        "narHash": "sha256-sV23mp0XnJHf4oSqqvFLFfvSkssHzxafqYMNw3HGEdg=",
+        "lastModified": 1792229118,
+        "narHash": "sha256-E8oJ073yhtFiCMVuixPvQbdYJNSTxu7ICTGMuq+jce8=",
         "owner": "Novattz",
         "repo": "creamlinux-installer",
-        "rev": "7c16b63b41f984a1f480fa14ce78da4cc4869a66",
+        "rev": "060077402f1fcada847f7fe07e0a62bfb2ab3799",
         "type": "github"
       },
       "original": {
@@ -274,11 +274,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792113651,
-        "narHash": "sha256-OAXcxtszGBk6CSHFnqT0bpH+AovFgBYsJBMHEh50UsA=",
+        "lastModified": 1792201829,
+        "narHash": "sha256-vdgfkwuM0goTgsL17YLKjbHHz0/pWovLes0Ukps0Yos=",
         "owner": "noctalia-dev",
         "repo": "noctalia",
-        "rev": "eeea6ff75cd71f9dbcd3acea6035449fefe3c71a",
+        "rev": "ea968f9fcfe498c559a04e193cc6161382fbc276",
         "type": "github"
       },
       "original": {
@@ -386,11 +386,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791627880,
-        "narHash": "sha256-qpJE5ug1T+7LEdXRLI9/ZIwe/rzqjILR9BpMg/sNVtM=",
+        "lastModified": 1792140224,
+        "narHash": "sha256-TEDD0EgSDKOl9hGNlEaINfd2Y4PFhyh4czw4lb1AGak=",
         "owner": "youwen5",
         "repo": "zen-browser-flake",
-        "rev": "458cd16116c362a5e92d5db6bdc3599e4e8b1f4a",
+        "rev": "5a0d21f99706b231df9ff35ab95dbccda88414d8",
         "type": "github"
       },
       "original": {
