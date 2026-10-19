@@ -12,7 +12,7 @@
 				cd /etc/nixos
 				set host (hostname | sed 's/^matty-//')
 
-				echo "🔨 Rebuilding NixOS (with upgrades)..."
+				echo "🔨 Rebuilding NixOS..."
 				sudo nixos-rebuild switch --flake .#$host
 
 				read -P "🗑️  Collect garbage now? [Y/n] " do_gc
