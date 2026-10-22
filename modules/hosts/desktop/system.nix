@@ -5,7 +5,7 @@
 		"/mnt/ext" =
 			{ device = "/dev/disk/by-uuid/9cf3bbde-ebaf-46fc-800f-1278342caa82";
 				fsType = "ext4";
-				options = [ "nofail" ];
+				options = [ "nofail" "uid=1000" "gid=100" ];
 			};
 
 		"/mnt/hihi" =

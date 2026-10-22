@@ -31,7 +31,7 @@
 		qbittorrent
 		jellyfin-desktop
 		planner
-		audacity
+		audacity_3
 		gptfdisk
 		woeusb
 		kdePackages.filelight

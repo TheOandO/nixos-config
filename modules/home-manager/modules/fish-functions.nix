@@ -42,7 +42,7 @@
 
 				read -P "Commit message (leave empty for default): " msg
 				if test -z "$msg"
-					set msg "update: "(date +%Y-%m-%d)
+					set msg "System update: "(date +%Y-%m-%d)
 				end
 				set msg "[$host] $msg"
 
