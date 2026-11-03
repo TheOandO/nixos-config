@@ -25,7 +25,6 @@
 		vesktop
 		vscode-fhs
 		libreoffice-stable
-		euro-office-desktopeditors
 		obsidian
 		gparted
 		qbittorrent
