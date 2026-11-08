@@ -75,7 +75,7 @@
 			openFirewall = true;
 		};
 
-		scx = {
+		scx-loader = {
 			enable = true;
 			package = pkgs.scx.rustscheds;
 			# - scx_bpfland: good for responsive desktop under heavy background load
