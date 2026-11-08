@@ -49,7 +49,7 @@
 
 		lact.enable = true;
 
-		scx = {
+		scx-loader = {
 			scheduler = "scx_cosmos";
 			extraArgs = [];
 		};
