@@ -7,7 +7,6 @@
 	    gnome-text-editor
 	    eog
 		nautilus
-		vscodium
 		gparted
 		adwaita-qt
 		adw-gtk3
