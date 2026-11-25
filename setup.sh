@@ -26,6 +26,81 @@ if [ "$EUID" -ne 0 ]; then
 fi
 success "Running as root."
 
+# ─── Step 1b: Work out who the real user is ───────────────────────────────────
+# Moved up from the git identity step: the key check below needs the home dir.
+REAL_USER="${SUDO_USER:-$USER}"
+USER_HOME=$(getent passwd "$REAL_USER" | cut -d: -f6)
+REAL_GROUP=$(id -gn "$REAL_USER")
+REPO_DIR="$USER_HOME/NIXOS"
+
+# Where your backed-up keys must be BEFORE you run this script.
+SSH_DIR="$USER_HOME/.ssh"
+SSH_KEY="$SSH_DIR/id_ed25519"
+AGE_DIR="$USER_HOME/.config/sops/age"
+AGE_KEY="$AGE_DIR/keys.txt"
+
+# ─── Step 1c: Check for backed-up SSH + sops age keys ─────────────────────────
+# Runs before anything destructive (step 5a deletes /etc/nixos), so you can stop
+# here, copy the files, and run the script again.
+echo ""
+log "Looking for your backed-up keys..."
+
+HAVE_SSH=false
+HAVE_AGE=false
+
+if [ -f "$SSH_KEY" ] && [ -f "$SSH_KEY.pub" ]; then
+    HAVE_SSH=true
+    success "SSH key found: $SSH_KEY"
+else
+    warn "SSH key not found (need both $SSH_KEY and $SSH_KEY.pub)."
+fi
+
+if [ -f "$AGE_KEY" ]; then
+    HAVE_AGE=true
+    success "sops age key found: $AGE_KEY"
+else
+    warn "sops age key not found (expected $AGE_KEY)."
+fi
+
+if [ "$HAVE_SSH" = false ] || [ "$HAVE_AGE" = false ]; then
+    echo ""
+    echo -e "${YELLOW}Reminder — copy your backups into place first:${NC}"
+    if [ "$HAVE_SSH" = false ]; then
+        echo "  • SSH key  -> $SSH_DIR/   (id_ed25519 and id_ed25519.pub)"
+        echo "    Without it, GitHub access and commit signing need a new key afterwards."
+    fi
+    if [ "$HAVE_AGE" = false ]; then
+        echo "  • age key  -> $AGE_DIR/   (keys.txt)"
+        echo "    Without it, secrets in your config (e.g. the NAS login) can't be decrypted,"
+        echo "    and the rebuild in step 12 will most likely fail."
+    fi
+    echo ""
+    read -rp "Continue anyway without them? [y/N]: " continue_without
+    case "$continue_without" in
+        y|Y) warn "Continuing without the missing key(s)." ;;
+        *)   log "Stopping. Copy the files into place, then run this script again."; exit 0 ;;
+    esac
+fi
+
+# ─── Step 1d: Fix ownership/permissions on the keys you copied in ─────────────
+# Files copied with sudo (or from a USB stick) often have the wrong owner or
+# mode, and ssh refuses a private key that others can read.
+if [ "$HAVE_SSH" = true ]; then
+    chown -R "$REAL_USER":"$REAL_GROUP" "$SSH_DIR"
+    chmod 700 "$SSH_DIR"
+    chmod 600 "$SSH_KEY"
+    chmod 644 "$SSH_KEY.pub"
+    success "Fixed ownership and permissions on $SSH_DIR."
+fi
+
+if [ "$HAVE_AGE" = true ]; then
+    chown "$REAL_USER":"$REAL_GROUP" "$USER_HOME/.config"
+    chown -R "$REAL_USER":"$REAL_GROUP" "$USER_HOME/.config/sops"
+    chmod 700 "$AGE_DIR"
+    chmod 600 "$AGE_KEY"
+    success "Fixed ownership and permissions on $AGE_DIR."
+fi
+
 # ─── Step 2: Ask host ─────────────────────────────────────────────────────────
 echo ""
 echo "Which host are you setting up?"
@@ -53,10 +128,6 @@ read -rp "Git email: " git_email
 if [ -z "$git_username" ] || [ -z "$git_email" ]; then
     error "Git username and email cannot be empty."
 fi
-
-REAL_USER="${SUDO_USER:-$USER}"
-USER_HOME=$(getent passwd "$REAL_USER" | cut -d: -f6)
-REPO_DIR="$USER_HOME/NIXOS"
 
 # ─── Step 4: Backup hardware config ───────────────────────────────────────────
 echo ""
@@ -152,7 +223,12 @@ success "Flake inputs updated."
 # ─── Step 12: Rebuild ─────────────────────────────────────────────────────────
 echo ""
 log "Running nixos-rebuild for $HOST..."
-nixos-rebuild switch --flake "$NIXOS_DIR#$HOST" || error "nixos-rebuild failed. Check the error output above."
+nixos-rebuild switch --flake "$NIXOS_DIR#$HOST" || {
+    if [ "$HAVE_AGE" = false ]; then
+        warn "No sops age key was found at $AGE_KEY. A failure here is most likely secret decryption (sops-install-secrets)."
+    fi
+    error "nixos-rebuild failed. Check the error output above."
+}
 success "NixOS rebuilt successfully for $HOST."
 
 # ─── Step 12b: Fix ownership after root-run git/nix operations ───────────────
@@ -166,6 +242,15 @@ echo ""
 log "Setting up dotfiles for $HOST..."
 
 DOTFILES_DIR="$USER_HOME/.config"
+BACKUP_DIR=""
+
+# The age key lives under ~/.config, which this step may move aside. Stash a
+# copy in a root-only temp dir so it can be put back after the clone.
+AGE_STAGE=""
+if [ "$HAVE_AGE" = true ]; then
+    AGE_STAGE="$(mktemp -d)"
+    cp -a "$AGE_DIR/." "$AGE_STAGE/"
+fi
 
 if [ -d "$DOTFILES_DIR/.git" ]; then
     warn "$DOTFILES_DIR is already a git repo, skipping dotfiles clone. Run 'pull-dot' manually to sync."
@@ -182,6 +267,29 @@ else
     success "Dotfiles cloned to $DOTFILES_DIR on branch '$HOST'."
 fi
 
+# Put the age key back, and keep it out of the dotfiles repo (pull-dot runs
+# 'git add .' inside ~/.config, which would otherwise stage the private key).
+if [ "$HAVE_AGE" = true ]; then
+    mkdir -p "$AGE_DIR"
+    cp -a "$AGE_STAGE/." "$AGE_DIR/"
+    rm -rf "$AGE_STAGE"
+    chown "$REAL_USER":"$REAL_GROUP" "$USER_HOME/.config"
+    chown -R "$REAL_USER":"$REAL_GROUP" "$USER_HOME/.config/sops"
+    chmod 700 "$AGE_DIR"
+    chmod 600 "$AGE_KEY"
+    success "sops age key restored to $AGE_DIR."
+
+    if [ -d "$DOTFILES_DIR/.git" ]; then
+        mkdir -p "$DOTFILES_DIR/.git/info"
+        grep -qxF 'sops/' "$DOTFILES_DIR/.git/info/exclude" 2>/dev/null || echo 'sops/' >> "$DOTFILES_DIR/.git/info/exclude"
+        success "sops/ excluded from the dotfiles repo (local .git/info/exclude)."
+    fi
+
+    if [ -n "$BACKUP_DIR" ]; then
+        warn "Your old ~/.config, including a copy of the age key under sops/age/, is in $BACKUP_DIR. Delete that copy once you've checked everything works."
+    fi
+fi
+
 # ─── Done ─────────────────────────────────────────────────────────────────────
 echo ""
 echo -e "${GREEN}════════════════════════════════════════${NC}"
@@ -191,13 +299,34 @@ echo ""
 echo -e "Config repo: $REPO_DIR (symlinked from /etc/nixos, owned by $REAL_USER)."
 echo -e "Dotfiles cloned to $DOTFILES_DIR on branch '$HOST' (run 'pull-dot' any time to resync)."
 echo ""
-echo -e "${YELLOW}Next step 1 — Set up SSH key for GitHub pushes:${NC}"
+echo -e "${YELLOW}Next step 1 — SSH keys for GitHub:${NC}"
 echo ""
-ssh-keygen -t ed25519 -C "nixos-$HOST"
-cat /root/.ssh/id_ed25519.pub
+
+# Your own key: used for your pushes and for signing commits.
+if [ "$HAVE_SSH" = true ]; then
+    echo "  Your restored key ($SSH_KEY) is in place. It's already on GitHub, so nothing to add."
+    echo "  Test it with: sudo -u $REAL_USER ssh -T git@github.com"
+else
+    echo "  You continued without an SSH key backup. As $REAL_USER, create a new one:"
+    echo "    ssh-keygen -t ed25519 -C \"$REAL_USER@$HOST\""
+    echo "  Then add the public key at https://github.com/settings/ssh/new, once as an"
+    echo "  Authentication key and once as a Signing key, and put it in signing.key"
+    echo "  (probably in git.nix). Commits fail to sign until that matches."
+fi
 echo ""
-echo "  Then add the key to: https://github.com/settings/ssh/new"
-echo "  And test with: ssh -T git@github.com"
+
+# Root's key: used by anything that runs as root, such as 'sudo sync-repos.sh'.
+# The path is explicit so it can never overwrite the key restored in $SSH_DIR.
+ROOT_KEY="/root/.ssh/id_ed25519"
+if [ ! -f "$ROOT_KEY" ]; then
+    mkdir -p /root/.ssh
+    chmod 700 /root/.ssh
+    ssh-keygen -t ed25519 -C "nixos-$HOST" -f "$ROOT_KEY"
+fi
+echo "  Root's public key (add it at https://github.com/settings/ssh/new if it isn't there yet):"
+cat "$ROOT_KEY.pub"
+echo ""
+echo "  Test it with: sudo ssh -i $ROOT_KEY -T git@github.com"
 echo ""
 
 echo -e "${YELLOW}Next step 2 — Add sync-repos.sh to your compositor startup:${NC}"

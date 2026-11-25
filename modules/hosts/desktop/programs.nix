@@ -45,6 +45,7 @@
 		desktop-file-utils
   		xdg-utils
 
+		(bottles.override { removeWarningPopup = true; })
 		inputs.freesmlauncher.packages.${pkgs.stdenv.hostPlatform.system}.default
 
 		clinfo

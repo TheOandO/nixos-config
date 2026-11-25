@@ -130,7 +130,7 @@
 
 				set old_head (git rev-parse HEAD)
 
-				echo "🔄 Pulling (your local edits are kept aside and restored)..."
+				echo "🔄 Pulling..."
 				if git pull --rebase --autostash origin $branch
 					if git diff --quiet $old_head HEAD
 						echo "📄 No file changes from the pull."
@@ -196,7 +196,7 @@
 
 				set old_head (git rev-parse HEAD)
 
-				echo "🔄 Pulling (your local edits are kept aside and restored)..."
+				echo "🔄 Pulling..."
 				if git pull --rebase --autostash origin $branch
 					if git diff --quiet $old_head HEAD
 						echo "📄 No file changes from the pull."
